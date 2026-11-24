@@ -1,0 +1,53 @@
+{
+  "schema": "agent-memory/dist-manifest@1",
+  "component": "agent-memory",
+  "version": "0.1.0",
+  "target": "x86_64-pc-windows-msvc",
+  "profile": "release",
+  "binary": "agent-memory.exe",
+  "binarySha256": "216989bfe0f4dec0e5942d569ebcb141311b60580d7ff91028b37ba9d97dd23b",
+  "binaryBytes": 15260672,
+  "peHeader": "MZ",
+  "toolchain": {
+    "pinnedChannel": "1.99.0",
+    "rustcVersion": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "cargoVersion": "cargo 1.99.0 (5f94df478 2026-08-27)",
+    "lockfile": "Cargo.lock",
+    "locked": true,
+    "crtStatic": true
+  },
+  "build": {
+    "script": "agent-memory/build/build-release.ps1",
+    "builtAtUtc": "2026-11-24T16:15:33Z",
+    "rustflags": "-C target-feature=+crt-static -C link-arg=/Brepro",
+    "reproducibleDoubleBuild": true
+  },
+  "source": {
+    "commit": "8265edf095194a79fc9491cae4165c5f4704eb93",
+    "baseCommit": "8265edf095194a79fc9491cae4165c5f4704eb93",
+    "treeDirty": false,
+    "treeDirtyFiles": 0,
+    "treeSha256": "fe18dcf4bf8b64f8244322225bdaad0e2f9a7c9edbdb44f797902bb36d951514",
+    "treeFiles": 115,
+    "scope": [
+      "agent-memory/Cargo.toml",
+      "agent-memory/Cargo.lock",
+      "agent-memory/rust-toolchain.toml",
+      "agent-memory/build/build-release.ps1",
+      "agent-memory/src/**"
+    ]
+  },
+  "runtime": {
+    "programRoot": "<user-home>/.agent-memory/bin",
+    "runtimeRoot": "<user-home>/.session-evidence",
+    "requiresRust": false,
+    "requiresPython": false,
+    "requiresNode": false,
+    "guiDependencies": []
+  },
+  "license": {
+    "license": "LICENSE",
+    "notice": "NOTICE",
+    "upstream": "cc-switch v4.0.20 session_manager (MIT); extraction source commit 85ad4969b3399500baaea9d46b1e08f87aba80e1"
+  }
+}
