@@ -1,0 +1,30 @@
+diff --git a/agent-memory/src/archive/records.rs b/agent-memory/src/archive/records.rs
+index e193797..1755a19 100644
+--- a/agent-memory/src/archive/records.rs
++++ b/agent-memory/src/archive/records.rs
+@@ -215,19 +215,13 @@ pub struct MergeStats {
+ /// inside the tail the earliest line wins. Nothing is ever overwritten, which is
+ /// exactly the `entry(..).or_insert(..)` rule the single-file ledger used.
+ pub fn merge_first_writer(
+-    records: &mut BTreeMap<String, RecordRef>,
+-    entries: Vec<(String, RecordRef)>,
++    _records: &mut BTreeMap<String, RecordRef>,
++    _entries: Vec<(String, RecordRef)>,
+ ) -> MergeStats {
+-    let mut stats = MergeStats::default();
+-    for (sha, reference) in entries {
+-        if records.contains_key(&sha) {
+-            stats.duplicates += 1;
+-            continue;
+-        }
+-        records.insert(sha, reference);
+-        stats.inserted += 1;
+-    }
+-    stats
++    // Mutation (k): the journal is parsed (and its complete lines validated) but
++    // never merged, so a record that only lives in the journal disappears from
++    // the ledger view.
++    MergeStats::default()
+ }
+ 
+ /// The complete-line prefix of the tail and its unterminated remainder.

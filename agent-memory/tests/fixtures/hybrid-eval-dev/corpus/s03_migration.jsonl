@@ -1,0 +1,5 @@
+{"timestamp": "2026-10-20T09:00:00Z", "type": "session_meta", "payload": {"id": "s-migration", "cwd": "C:/synthetic/project"}}
+{"timestamp": "2026-10-20T09:01:00Z", "type": "response_item", "payload": {"type": "message", "role": "user", "content": "How do I roll back a failed database migration safely?"}}
+{"timestamp": "2026-10-20T09:02:00Z", "type": "response_item", "payload": {"type": "message", "role": "assistant", "content": "Take a snapshot before applying the migration, then run the down script in a transaction. If the down script is not reversible, restore the snapshot and mark the migration as failed."}}
+{"timestamp": "2026-10-20T09:03:00Z", "type": "response_item", "payload": {"type": "message", "role": "user", "content": "What about zero downtime?"}}
+{"timestamp": "2026-10-20T09:04:00Z", "type": "response_item", "payload": {"type": "message", "role": "assistant", "content": "Use expand-and-contract: add nullable columns first, backfill in batches, deploy code that reads both shapes, then drop the old column."}}

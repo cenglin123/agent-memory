@@ -1,0 +1,57 @@
+{"id":"q-ex-01","query":"透视表一刷新就报「数据透视表字段名无效」，当时是怎么修的？","category":"exact","expect":{"file":"s01_excel.jsonl","line":8,"contains":"数据透视表字段名无效"}}
+{"id":"q-ex-02","query":"切片器联动两个透视表那次是怎么配的来着？","category":"exact","expect":{"file":"s01_excel.jsonl","line":13,"contains":"SlicerCache"}}
+{"id":"q-ex-03","query":"git revert -m 1 之后再合并分支怎么不生效？","category":"exact","expect":{"file":"s02_git.jsonl","line":6,"contains":"revert -m 1"}}
+{"id":"q-ex-04","query":"git branch -D 删掉的分支用 reflog 找回是哪几步？","category":"exact","expect":{"file":"s02_git.jsonl","line":8,"contains":"git reflog"}}
+{"id":"q-ex-05","query":"certificate verify failed: unable to get local issuer certificate 该配哪个证书？","category":"exact","expect":{"file":"s03_proxy.jsonl","line":7,"contains":"SSL_CERT_FILE"}}
+{"id":"q-ex-06","query":"ffmpeg 把 srt 封装成 mov_text 软字幕是怎么弄的？","category":"exact","expect":{"file":"s05_video.jsonl","line":7,"contains":"mov_text"}}
+{"id":"q-ex-07","query":"pip 一直回溯报 ResolutionImpossible 该怎么处理？","category":"exact","expect":{"file":"s04_python.jsonl","line":5,"contains":"ResolutionImpossible"}}
+{"id":"q-ex-08","query":"Outlook 的 Attachment.Remove 是保留正文删附件吗？","category":"exact","expect":{"file":"s06_mail.jsonl","line":8,"contains":"Attachment.Remove"}}
+{"id":"q-ex-09","query":"NAS 同步的 sync-conflict 冲突副本是怎么产生的？","category":"exact","domain":"work","expect":{"file":"s07_nas_work.jsonl","line":2,"contains":"sync-conflict"}}
+{"id":"q-sy-01","query":"每周往源表追加新行之后汇总还得重新框数据范围，能让它自己扩展吗？","category":"synonym","expect":{"file":"s01_excel.jsonl","line":7,"contains":"刷新范围"}}
+{"id":"q-sy-02","query":"按周汇总的时候每周头几天总被归到上一周，口径怎么定？","category":"synonym","expect":{"file":"s01_excel.jsonl","line":17,"contains":"周日起算"}}
+{"id":"q-sy-03","query":"两边都改了依赖清单，合并时候自动生成的依赖锁文件打架，怎么处理才不弄乱依赖树？","category":"synonym","expect":{"file":"s02_git.jsonl","line":2,"contains":"依赖树才一致"}}
+{"id":"q-sy-04","query":"手滑把没合并的分支删了，还有后悔药吗？","category":"synonym","expect":{"file":"s02_git.jsonl","line":10,"contains":"最后一个提交"}}
+{"id":"q-sy-05","query":"有些命令是卡住不动，有些是直接报安全校验失败，这两类毛病怎么区分？","category":"synonym","expect":{"file":"s03_proxy.jsonl","line":13,"contains":"TCP 层没连上"}}
+{"id":"q-sy-06","query":"转出来的片子声音和画面对不上拍子，差半秒，从哪里调？","category":"synonym","expect":{"file":"s05_video.jsonl","line":11,"contains":"itsoffset"}}
+{"id":"q-sy-07","query":"两套代码一个要老版数值计算库一个要新版互相踩，环境怎么隔开？","category":"synonym","expect":{"file":"s04_python.jsonl","line":2,"contains":"包目录互相隔离"}}
+{"id":"q-sy-08","query":"项目挪了盘符之后环境里的命令都指错解释器，修旧的还是重建划算？","category":"synonym","expect":{"file":"s04_python.jsonl","line":16,"contains":"旧盘符残留"}}
+{"id":"q-sy-09","query":"附件的原始文件名全都一样，落盘时互相覆盖，起名规则该怎么定？","category":"synonym","expect":{"file":"s06_mail.jsonl","line":6,"contains":"计数后缀"}}
+{"id":"q-sy-10","query":"邮箱的数据文件越来越大，怎么瘦身才不影响以后翻旧信？","category":"synonym","expect":{"file":"s06_mail.jsonl","line":8,"contains":"压缩数据文件"}}
+{"id":"q-sy-11","query":"共享目录现在谁都能改，收权限怎么收才不影响大家干活？","category":"synonym","domain":"work","expect":{"file":"s07_nas_work.jsonl","line":7,"contains":"部门组"}}
+{"id":"q-sy-12","query":"代理相关的环境变量和 git 配置键各叫什么？","category":"synonym","expect_any":[{"file":"s03_proxy.jsonl","line":3,"contains":"HTTP_PROXY"},{"file":"s03_proxy.jsonl","line":13,"contains":"http.proxy"}]}
+{"id":"q-sy-13","query":"视频体积和转码速度之间怎么取舍？","category":"synonym","expect_any":[{"file":"s05_video.jsonl","line":3,"contains":"体积换时间"},{"file":"s05_video.jsonl","line":15,"contains":"CRF 18-23"}]}
+{"id":"q-cl-01","query":"How do I make the weekly summary table pick up newly added rows automatically?","category":"cross_lingual","expect":{"file":"s01_excel.jsonl","line":7,"contains":"刷新范围"}}
+{"id":"q-cl-02","query":"git says my feature branch is already merged after I reverted the whole thing. How do I merge it again?","category":"cross_lingual","expect":{"file":"s02_git.jsonl","line":6,"contains":"反向合并"}}
+{"id":"q-cl-03","query":"pip install fails with proxy authentication required inside the corporate network. What should I configure?","category":"cross_lingual","expect":{"file":"s03_proxy.jsonl","line":3,"contains":"HTTP_PROXY"}}
+{"id":"q-cl-04","query":"How do I keep subtitles toggleable instead of burning them into the picture?","category":"cross_lingual","expect":{"file":"s05_video.jsonl","line":7,"contains":"软字幕轨"}}
+{"id":"q-cl-05","query":"My two projects need different numpy versions and keep breaking each other. What setup do you recommend?","category":"cross_lingual","expect":{"file":"s04_python.jsonl","line":2,"contains":"包目录互相隔离"}}
+{"id":"q-cl-06","query":"How can I bulk-export the attachments from a whole year of inbox mail without saving them one by one?","category":"cross_lingual","expect":{"file":"s06_mail.jsonl","line":2,"contains":"Attachments"}}
+{"id":"q-cl-07","query":"周报怎么自动导出成 PDF 发给门店来着？","category":"cross_lingual","expect":{"file":"s01_excel.jsonl","line":19,"contains":"ExportAsFixedFormat"}}
+{"id":"q-cl-08","query":"cherry-pick 的重复冲突怎么让它记住我上次的解法？","category":"cross_lingual","expect":{"file":"s02_git.jsonl","line":14,"contains":"rerere"}}
+{"id":"q-cl-09","query":"手机抓包装了证书 App 还是不信任，怎么回事？","category":"cross_lingual","expect":{"file":"s03_proxy.jsonl","line":15,"contains":"pinning"}}
+{"id":"q-cl-10","query":"docker 里装依赖报 wheel 不兼容，本地却好好的，怎么破？","category":"cross_lingual","expect":{"file":"s04_python.jsonl","line":30,"contains":"manylinux"}}
+{"id":"q-cl-11","query":"竖屏的视频分辨率不一样，怎么合并成一个长片？","category":"cross_lingual","expect":{"file":"s05_video.jsonl","line":13,"contains":"concat demuxer"}}
+{"id":"q-cl-12","query":"带数字签名的邮件附件抽不出来还报权限错误，是为什么？","category":"cross_lingual","expect":{"file":"s06_mail.jsonl","line":10,"contains":"S/MIME"}}
+{"id":"q-cl-13","query":"NAS 上同步海量小文件特别慢，怎么提速？","category":"cross_lingual","domain":"work","expect":{"file":"s07_nas_work.jsonl","line":13,"contains":"multichannel"}}
+{"id":"q-ls-01","query":"团队锁文件最后选了 poetry 还是 uv 那套？","category":"long_session","expect":{"file":"s04_python.jsonl","line":20,"contains":"uv pip sync"}}
+{"id":"q-ls-02","query":"以前用 user 方式装的包会不会串到现在环境里？","category":"long_session","expect":{"file":"s04_python.jsonl","line":24,"contains":"user site"}}
+{"id":"q-ls-03","query":"3.12 上装老项目编译不过那次最后怎么绕的？","category":"long_session","expect":{"file":"s04_python.jsonl","line":28,"contains":"requires-python"}}
+{"id":"q-ls-04","query":"离线环境装那个 git 依赖最后怎么办的？","category":"long_session","expect":{"file":"s04_python.jsonl","line":36,"contains":"no-index"}}
+{"id":"q-ls-05","query":"ensurepip 不可用的机器上怎么建环境？","category":"long_session","expect":{"file":"s04_python.jsonl","line":38,"contains":"ensurepip"}}
+{"id":"q-ls-06","query":"pip 报 hash 不匹配那次是怎么处理的？","category":"long_session","expect":{"file":"s04_python.jsonl","line":42,"contains":"pip cache purge"}}
+{"id":"q-ls-07","query":"最后给新项目定的标准流程是什么来着？","category":"long_session","expect":{"file":"s04_python.jsonl","line":46,"contains":"uv venv"}}
+{"id":"q-mm-01","query":"Excel 周报那个透视表自动刷新数据范围是怎么弄的？","category":"model_missing","expect":{"file":"s01_excel.jsonl","line":7,"contains":"刷新范围"}}
+{"id":"q-mm-02","query":"git push 被拒说 non-fast-forward，回滚之后怎么推上去？","category":"model_missing","expect":{"file":"s02_git.jsonl","line":15,"contains":"non-fast-forward"}}
+{"id":"q-mm-03","query":"ffmpeg 烧硬字幕的 subtitles 参数怎么写来着？","category":"model_missing","expect":{"file":"s05_video.jsonl","line":7,"contains":"subtitles"}}
+{"id":"q-mm-04","query":"映射盘符重启就掉线，persistent 和凭据那块怎么配？","category":"model_missing","domain":"work","expect":{"file":"s07_nas_work.jsonl","line":11,"contains":"persistent"}}
+{"id":"q-mm-05","query":"Outlook 附件批量保存到按月份目录那个脚本要点是什么？","category":"model_missing","expect":{"file":"s06_mail.jsonl","line":2,"contains":"按月份分的目录"}}
+{"id":"q-pn-01","query":"NAS 硬盘坏道检测是怎么做的来着？","category":"permission_negative","expect":{"empty":true}}
+{"id":"q-pn-02","query":"NAS 断电以后靠 UPS 续航那套方案是什么来着？","category":"permission_negative","expect":{"empty":true}}
+{"id":"q-pn-03","query":"打印机驱动怎么静默分发到各台电脑？","category":"permission_negative","expect":{"empty":true}}
+{"id":"q-pn-04","query":"会议室投影仪总是黑屏，怎么排查？","category":"permission_negative","expect":{"empty":true}}
+{"id":"q-pn-05","query":"报销单的发票验真是走哪个系统？","category":"permission_negative","expect":{"empty":true}}
+{"id":"q-pn-06","query":"上次团建订的餐厅是哪家来着？","category":"permission_negative","expect":{"empty":true}}
+{"id":"q-pn-07","query":"NAS 的相册缩略图缓存坏了怎么重建？","category":"permission_negative","expect":{"empty":true,"no_hits_from_source":"archive-work","source_id":"archive-work","source_status":"unavailable","code":"DOMAIN_UNREACHABLE"}}
+{"id":"q-pn-08","query":"薪资调整的审批走到哪一步了？","category":"permission_negative","expect":{"empty":true,"no_hits_from_source":"archive-work","source_id":"archive-work","source_status":"unavailable","code":"DOMAIN_UNREACHABLE"}}
+{"id":"q-pn-09","query":"邮件怎么设置自动转发到私人邮箱？","category":"permission_negative","expect":{"no_hits_from_source":"archive-work"}}
+{"id":"q-pn-10","query":"NAS 共享链接的有效期怎么设置？","category":"permission_negative","expect":{"no_hits_from_source":"archive-work"}}

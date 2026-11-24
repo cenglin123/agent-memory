@@ -1,0 +1,53 @@
+--- a/agent-memory/src/recall/fulltext/fallback.rs
++++ b/agent-memory/src/recall/fulltext/fallback.rs
+@@ -1094,20 +1094,10 @@
+         report.removed += 1;
+     }
+ 
+-    // Decide every carrier against the **same** registry snapshot before
+-    // anything is registered: a session whose id is held by several carriers
+-    // must be projected from all of them in this run (a zero-row carrier that
+-    // sorts first must not hide the real content of a later one).
+-    let mut pending_by_carrier: Vec<Vec<String>> = Vec::with_capacity(carriers.len());
++    // Mutation (verify-001 P2-1): each carrier is decided as it is reached and
++    // registered immediately, so a zero-row carrier that sorts first hides the
++    // real content of a later carrier.
+     let mut skipped: BTreeSet<String> = BTreeSet::new();
+-    for (_, _, missing, _) in &carriers {
+-        pending_by_carrier.push(partition_archive_work(
+-            writer,
+-            missing,
+-            &fingerprints,
+-            &mut skipped,
+-        )?);
+-    }
+     report.skipped_registered_empty += skipped.len() as u64;
+ 
+     // Rebuild carriers that still have wanted sessions without rows. A
+@@ -1117,7 +1107,8 @@
+     // shared by all of them (one manifest parse, not one per carrier).
+     let mut batch: Option<EvidenceBatch<'_>> = None;
+     let mut projected: BTreeSet<String> = BTreeSet::new();
+-    for ((rel, group, _, _), pending) in carriers.iter().zip(pending_by_carrier) {
++    for (rel, group, missing, _) in carriers.iter() {
++        let pending = partition_archive_work(writer, missing, &fingerprints, &mut skipped)?;
+         if pending.is_empty() {
+             continue;
+         }
+@@ -1153,6 +1144,16 @@
+                 Some(&whitelist),
+             )
+             .map_err(|error| error.message())?;
++        }
++        for session in &pending {
++            let units = writer
++                .archive_unit_count(session)
++                .map_err(|error| error.to_string())?;
++            let fingerprint = carrier_fingerprint_for(&fingerprints, session);
++            writer
++                .remember_archive_session(session, units, &fingerprint)
++                .map_err(|error| error.to_string())?;
++            report.added += 1;
+         }
+     }
+ 

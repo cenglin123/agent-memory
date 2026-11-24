@@ -1,0 +1,78 @@
+--- a/agent-memory/src/recall/fulltext/mod.rs
++++ b/agent-memory/src/recall/fulltext/mod.rs
+@@ -940,49 +940,29 @@ fn backfill_narrow_columns(
+ ) -> rusqlite::Result<BackfillOutcome> {
+-    conn.execute_batch(
+-        "DROP TABLE IF EXISTS temp.narrow_fill;
+-         CREATE TEMP TABLE narrow_fill (
+-             rowid INTEGER PRIMARY KEY,
+-             ts INTEGER NOT NULL,
+-             title TEXT NOT NULL
+-         );
+-         INSERT INTO narrow_fill(rowid, ts, title)
+-             SELECT rowid, COALESCE(ts, 0), COALESCE(title, '')
+-               FROM units;",
+-    )?;
+-    let rows: u64 = conn.query_row("SELECT COUNT(*) FROM narrow_fill", [], |row| {
+-        row.get::<_, i64>(0)
+-    })? as u64;
+-    // Before the fill overwrites the narrow title: a non-empty narrow title that
+-    // differs from the unit's is a rename the other writer applied to `units`
+-    // only. The join is a `conversation_units` scan with one indexed lookup into
+-    // the staged rows — no extra FTS5 pass.
+-    let relabelled = if detect_relabels && fill_title {
+-        let mut statement = conn.prepare(
+-            "SELECT DISTINCT narrow.session_id
+-               FROM conversation_units AS narrow
+-               JOIN narrow_fill AS fill ON fill.rowid = narrow.rowid
+-              WHERE narrow.title <> '' AND narrow.title <> fill.title
+-              ORDER BY narrow.session_id",
+-        )?;
+-        let rows = statement.query_map([], |row| row.get::<_, String>(0))?;
+-        rows.collect::<rusqlite::Result<Vec<String>>>()?
+-    } else {
+-        Vec::new()
+-    };
+-    if fill_ts {
+-        conn.execute_batch(
+-            "UPDATE doc_keys SET ts = fill.ts
+-               FROM narrow_fill AS fill
+-              WHERE fill.rowid = doc_keys.rowid;",
+-        )?;
+-    }
+-    if fill_title {
+-        conn.execute_batch(
+-            "UPDATE conversation_units SET title = fill.title
+-               FROM narrow_fill AS fill
+-              WHERE fill.rowid = conversation_units.rowid;",
+-        )?;
++    // Mutation (implementation-004a, rework 4): the original defect — step an
++    // FTS5 cursor and write one narrow row per step. `doc_keys` names a column
++    // `rowid`, so every `UPDATE … WHERE rowid = ?` is a full table scan and the
++    // backfill becomes quadratic. The relabel detection is dead here as well.
++    let _ = detect_relabels;
++    let mut select = conn.prepare("SELECT rowid, ts, title FROM units")?;
++    let mut rows = select.query([])?;
++    let mut update_ts = conn.prepare("UPDATE doc_keys SET ts = ?2 WHERE rowid = ?1")?;
++    let mut update_title =
++        conn.prepare("UPDATE conversation_units SET title = ?2 WHERE rowid = ?1")?;
++    let mut filled = 0u64;
++    while let Some(row) = rows.next()? {
++        let rowid: i64 = row.get(0)?;
++        if fill_ts {
++            let ts: i64 = row.get::<_, Option<i64>>(1)?.unwrap_or(0);
++            update_ts.execute(params![rowid, ts])?;
++        }
++        if fill_title {
++            let title: String = row.get::<_, Option<String>>(2)?.unwrap_or_default();
++            update_title.execute(params![rowid, title])?;
++        }
++        filled += 1;
+     }
+-    conn.execute_batch("DROP TABLE narrow_fill")?;
+-    Ok(BackfillOutcome { rows, relabelled })
++    Ok(BackfillOutcome {
++        rows: filled,
++        relabelled: Vec::new(),
++    })
+ }

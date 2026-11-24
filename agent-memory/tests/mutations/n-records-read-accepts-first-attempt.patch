@@ -1,0 +1,15 @@
+diff --git a/agent-memory/src/archive/mod.rs b/agent-memory/src/archive/mod.rs
+--- a/agent-memory/src/archive/mod.rs
++++ b/agent-memory/src/archive/mod.rs
+@@ -1126,7 +1126,10 @@
+         let before = LedgerStamp::of(&canonical, &tail);
+         let (ledger, read) = read_ledger_once(root, &canonical, &tail)?;
+         let after = LedgerStamp::of(&canonical, &tail);
+-        if before == after {
++        // Mutation (n): the first attempt is always accepted, so the stamp is
++        // effectively taken after the bytes: a writer that moves either file
++        // between the two reads yields a merge of two different states.
++        if before == after || true {
+             return Ok((ledger, after, read));
+         }
+         attempt += 1;

@@ -1,0 +1,50 @@
+{"id": "q01", "query": "缓存命中率", "category": "exact", "expect": {"file": "s01_cache.jsonl", "line": 2, "contains": "缓存命中率"}}
+{"id": "q02", "query": "整表缓存", "category": "exact", "expect": {"file": "s01_cache.jsonl", "line": 3, "contains": "整表缓存"}}
+{"id": "q03", "query": "请求穿透", "category": "exact", "expect": {"file": "s01_cache.jsonl", "line": 7, "contains": "请求穿透"}}
+{"id": "q04", "query": "CI 流水线太慢", "category": "exact", "expect": {"file": "s02_ci.jsonl", "line": 2, "contains": "CI 流水线太慢"}}
+{"id": "q05", "query": "lockfile", "category": "exact", "expect": {"file": "s02_ci.jsonl", "line": 5, "contains": "lockfile"}}
+{"id": "q06", "query": "roll back a failed database migration", "category": "exact", "expect": {"file": "s03_migration.jsonl", "line": 3, "contains": "snapshot"}}
+{"id": "q07", "query": "zero downtime", "category": "exact", "expect": {"file": "s03_migration.jsonl", "line": 4, "contains": "zero downtime"}}
+{"id": "q08", "query": "审计日志里手机号", "category": "exact", "expect": {"file": "s04_long.jsonl", "line": 46, "contains": "脱敏"}}
+{"id": "q09", "query": "needle-token-cache", "category": "exact", "expect": {"file": "s05_tokens.jsonl", "line": 2, "contains": "needle-token-cache"}}
+{"id": "q10", "query": "缓存颗粒太粗导致频繁清理", "category": "synonym", "expect": {"file": "s01_cache.jsonl", "line": 5, "contains": "版本号"}}
+{"id": "q11", "query": "怎么让热点数据更快命中", "category": "synonym", "expect_any": [{"file": "s01_cache.jsonl", "line": 2, "contains": "命中率"}, {"file": "s01_cache.jsonl", "line": 3, "contains": "热点数据"}]}
+{"id": "q12", "query": "构建任务太慢怎样缩短等待", "category": "synonym", "expect_any": [{"file": "s02_ci.jsonl", "line": 2, "contains": "CI 流水线"}, {"file": "s02_ci.jsonl", "line": 3, "contains": "并行化独立任务"}]}
+{"id": "q13", "query": "依赖安装每次都重新下载", "category": "synonym", "expect": {"file": "s02_ci.jsonl", "line": 5, "contains": "lockfile"}}
+{"id": "q14", "query": "数据库变更失败如何恢复", "category": "synonym", "expect_any": [{"file": "s03_migration.jsonl", "line": 2, "contains": "roll back"}, {"file": "s03_migration.jsonl", "line": 3, "contains": "snapshot"}]}
+{"id": "q15", "query": "不中断服务地修改表结构", "category": "synonym", "expect": {"file": "s03_migration.jsonl", "line": 5, "contains": "expand-and-contract"}}
+{"id": "q16", "query": "用户隐私字段怎么打码", "category": "synonym", "expect_any": [{"file": "s04_long.jsonl", "line": 46, "contains": "脱敏"}, {"file": "s04_long.jsonl", "line": 47, "contains": "脱敏"}, {"file": "s04_long.jsonl", "line": 48, "contains": "脱敏"}]}
+{"id": "q17", "query": "历史日志需要重新处理吗", "category": "synonym", "expect_any": [{"file": "s04_long.jsonl", "line": 47, "contains": "批处理重写"}, {"file": "s04_long.jsonl", "line": 48, "contains": "脱敏"}]}
+{"id": "q18", "query": "缓存过期时间设置多长合适", "category": "synonym", "expect": {"file": "s01_cache.jsonl", "line": 3, "contains": "过期时间"}}
+{"id": "q19", "query": "how to reduce cache invalidation cost", "category": "cross_lingual", "expect_any": [{"file": "s01_cache.jsonl", "line": 2, "contains": "命中率"}, {"file": "s01_cache.jsonl", "line": 3, "contains": "整表缓存"}, {"file": "s01_cache.jsonl", "line": 5, "contains": "版本号"}]}
+{"id": "q20", "query": "avoid cache penetration during traffic spikes", "category": "cross_lingual", "expect": {"file": "s01_cache.jsonl", "line": 7, "contains": "请求穿透"}}
+{"id": "q21", "query": "speed up continuous integration pipeline", "category": "cross_lingual", "expect_any": [{"file": "s02_ci.jsonl", "line": 2, "contains": "CI 流水线"}, {"file": "s02_ci.jsonl", "line": 3, "contains": "并行化独立任务"}]}
+{"id": "q22", "query": "restore a snapshot after a failed schema change", "category": "cross_lingual", "expect": {"file": "s03_migration.jsonl", "line": 3, "contains": "snapshot"}}
+{"id": "q23", "query": "mask phone numbers in audit logs", "category": "cross_lingual", "expect_any": [{"file": "s04_long.jsonl", "line": 46, "contains": "脱敏"}, {"file": "s04_long.jsonl", "line": 47, "contains": "脱敏"}, {"file": "s04_long.jsonl", "line": 48, "contains": "脱敏"}]}
+{"id": "q24", "query": "批量回填后删除旧列", "category": "cross_lingual", "expect": {"file": "s03_migration.jsonl", "line": 5, "contains": "expand-and-contract"}}
+{"id": "q25", "query": "缓存二级结构怎么做", "category": "cross_lingual", "expect": {"file": "s01_cache.jsonl", "line": 5, "contains": "Redis"}}
+{"id": "q26", "query": "why is my cache hit rate low", "category": "cross_lingual", "expect": {"file": "s01_cache.jsonl", "line": 2, "contains": "缓存命中率"}}
+{"id": "q27", "query": "审计日志脱敏规则", "category": "long_session", "expect": {"file": "s04_long.jsonl", "line": 46, "contains": "脱敏"}}
+{"id": "q28", "query": "历史数据一次性批处理重写", "category": "long_session", "expect_any": [{"file": "s04_long.jsonl", "line": 47, "contains": "批处理重写"}, {"file": "s04_long.jsonl", "line": 48, "contains": "脱敏"}]}
+{"id": "q29", "query": "脱敏后的掩码格式校验", "category": "long_session", "expect": {"file": "s04_long.jsonl", "line": 48, "contains": "掩码格式"}}
+{"id": "q30", "query": "手机号保留前三位后四位", "category": "long_session", "expect": {"file": "s04_long.jsonl", "line": 46, "contains": "脱敏"}}
+{"id": "q31", "query": "身份证号保留出生年份", "category": "long_session", "expect": {"file": "s04_long.jsonl", "line": 46, "contains": "脱敏"}}
+{"id": "q32", "query": "日志脱敏保留几位", "category": "long_session", "expect": {"file": "s04_long.jsonl", "line": 46, "contains": "脱敏"}}
+{"id": "q33", "query": "needle-token-deploy", "category": "model_missing", "expect": {"file": "s05_tokens.jsonl", "line": 2, "contains": "needle-token-deploy"}}
+{"id": "q34", "query": "needle-token-migrate", "category": "model_missing", "expect": {"file": "s05_tokens.jsonl", "line": 3, "contains": "needle-token-migrate"}}
+{"id": "q35", "query": "needle-token-audit", "category": "model_missing", "expect": {"file": "s05_tokens.jsonl", "line": 3, "contains": "needle-token-audit"}}
+{"id": "q36", "query": "needle-token-cache 与 needle-token-deploy", "category": "model_missing", "expect": {"file": "s05_tokens.jsonl", "line": 2, "contains": "needle-token-cache"}}
+{"id": "q37", "query": "薪资", "category": "permission_negative", "expect": {"empty": true, "no_hits_from_source": "archive-work", "source_id": "archive-work", "source_status": "unavailable", "code": "DOMAIN_UNREACHABLE"}}
+{"id": "q38", "query": "明天北京天气怎么样", "category": "unrelated_negative", "expect": {"empty": true, "source_id": "archive-work", "source_status": "unavailable", "code": "DOMAIN_UNREACHABLE"}}
+{"id": "q39", "query": "会议室预订流程是什么", "category": "unrelated_negative", "expect": {"empty": true, "source_id": "archive-work", "source_status": "unavailable", "code": "DOMAIN_UNREACHABLE"}}
+{"id": "q40", "query": "报销发票抬头怎么填", "category": "unrelated_negative", "expect": {"empty": true, "source_id": "archive-work", "source_status": "unavailable", "code": "DOMAIN_UNREACHABLE"}}
+{"id": "q41", "query": "今天午餐吃什么", "category": "unrelated_negative", "expect": {"empty": true, "source_id": "archive-work", "source_status": "unavailable", "code": "DOMAIN_UNREACHABLE"}}
+{"id": "q42", "query": "快递到哪了", "category": "unrelated_negative", "expect": {"empty": true, "source_id": "archive-work", "source_status": "unavailable", "code": "DOMAIN_UNREACHABLE"}}
+{"id": "q43", "query": "怎么办理护照", "category": "unrelated_negative", "expect": {"empty": true, "source_id": "archive-work", "source_status": "unavailable", "code": "DOMAIN_UNREACHABLE"}}
+{"id": "q44", "query": "怎么申请年假", "category": "weak_overlap_negative", "expect": {"empty": true, "source_id": "archive-work", "source_status": "unavailable", "code": "DOMAIN_UNREACHABLE"}}
+{"id": "q45", "query": "打印机驱动安装失败", "category": "weak_overlap_negative", "expect": {"empty": true, "source_id": "archive-work", "source_status": "unavailable", "code": "DOMAIN_UNREACHABLE"}}
+{"id": "q46", "query": "项目进度汇报模板", "category": "weak_overlap_negative", "expect": {"empty": true, "source_id": "archive-work", "source_status": "unavailable", "code": "DOMAIN_UNREACHABLE"}}
+{"id": "q47", "query": "confidential exit checklist", "category": "permission_negative", "expect": {"empty": true, "no_hits_from_source": "archive-work", "source_id": "archive-work", "source_status": "unavailable", "code": "DOMAIN_UNREACHABLE"}}
+{"id": "q48", "query": "salary adjustment private", "category": "permission_negative", "expect": {"empty": true, "no_hits_from_source": "archive-work", "source_id": "archive-work", "source_status": "unavailable", "code": "DOMAIN_UNREACHABLE"}}
+{"id": "q49", "query": "薪资调整方案", "category": "permission_negative", "expect": {"file": "s06_work.jsonl", "line": 2, "contains": "薪资调整方案"}, "domain": "work"}
+{"id": "q50", "query": "离职交接", "category": "permission_negative", "expect": {"empty": true, "source_id": "archive-work", "source_status": "unavailable", "code": "DOMAIN_UNREACHABLE"}}

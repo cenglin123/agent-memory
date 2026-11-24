@@ -1,0 +1,18 @@
+--- a/agent-memory/src/recall/fulltext/mod.rs
++++ b/agent-memory/src/recall/fulltext/mod.rs
+@@ -90,11 +90,10 @@
+ 
+ /// Projection-rule generation of one source kind. An index whose stored
+ /// `projector_version` differs is stale for that source only.
+-pub fn projector_version(kind: SourceKind) -> &'static str {
+-    match kind {
+-        SourceKind::ClaudeCode => CLAUDE_PROJECTOR_VERSION,
+-        _ => PROJECTOR_VERSION,
+-    }
++pub fn projector_version(_kind: SourceKind) -> &'static str {
++    // Mutation: one global projection generation, so a change in any source's
++    // projection rules rebuilds every source.
++    CLAUDE_PROJECTOR_VERSION
+ }
+ 
+ /// `<cache_root>/live/`

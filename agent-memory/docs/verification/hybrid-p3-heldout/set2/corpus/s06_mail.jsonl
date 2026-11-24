@@ -1,0 +1,12 @@
+{"type":"user","message":{"role":"user","content":"领导让我把这一年收件箱里所有带报表附件的邮件归档出来，手工另存为太慢了。"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"用 win32com 起 Outlook，遍历 Inbox.Items 筛 Subject 关键词，再遍历 Attachments 保存到按月份分的目录。注意 Items.Find 走的是索引，别写成整箱遍历再用 Python 判断，会非常慢。"},{"type":"tool_use","name":"Bash","input":{"command":"python archive_attachments.py --folder Inbox --year 2026"}}]}}
+{"type":"user","message":{"role":"user","content":[{"type":"tool_result","content":"saved 143 attachments to D:/archive/mail/2026"}]}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"143 个都落盘了。建议再生成一份 manifest.csv 记录每封邮件的发件人、主题和保存路径，方便日后回查。"}]}}
+{"type":"user","message":{"role":"user","content":"归档完发现好多附件同名，后保存的把先保存的盖掉了，怎么破？"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"保存时用 发件人 加主题前 20 字 加原文件名 的规则拼新名，冲突的再加计数后缀。别只用附件原始名，报表类附件几乎都叫 报表.xlsx。"}]}}
+{"type":"user","message":{"role":"user","content":"邮件本体不用存，只要附件对吧？那邮箱本身怎么瘦身，数据文件越来越大。"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"对，附件落盘后可以在邮件上删附件保留正文（Attachment.Remove 会保存一封改过的副本）。数据文件瘦身用 Outlook 的压缩数据文件功能，或者把老邮件导出成年度文件存冷存储。"}]}}
+{"type":"user","message":{"role":"user","content":"A few emails with digital signatures will not give up their attachments, I get a permission error. Are they encrypted?"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"S/MIME encrypted mail keeps attachments inside the encrypted body and the Outlook object model cannot open them; decrypt in Outlook with your certificate and save them by hand. Signed-only mail extracts normally."}]}}
+{"type":"user","message":{"role":"user","content":"那目录结构按月份分是怎么定的？发件日期还是收件日期？"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"用 ReceivedTime 的年月做目录（比如 2026/10），邮件头的 SentOn 时区可能不同会有偏差。附件名过滤用 xlsx、xls、csv 结尾的规则就够，别把会议邀请的 ics 也归进去。"}]}}

@@ -1,0 +1,5 @@
+{"id": "s1-quote", "query": "needle-recall-001", "kind": "single_session_quote", "gold": [{"source_id": "sessions", "session_id": "11111111-1111-4111-8111-111111111111", "snippet": "needle-recall-001"}], "negative": false}
+{"id": "s1-quote-ident", "query": "needle-recall-001", "mode": "exact", "kind": "single_session_quote", "gold": [{"source_id": "sessions", "session_id": "11111111-1111-4111-8111-111111111111"}], "negative": false, "rewrite_of": "s1-quote"}
+{"id": "s2-cross", "query": "季度对账口径", "kind": "cross_session_fact", "gold": [{"source_id": "sessions", "session_id": "22222222-2222-4222-8222-222222222222"}], "negative": false}
+{"id": "kb-cache", "query": "缓存命中率", "kind": "kb_multi_doc", "gold": [{"source_id": "kb", "rel_path": "notes/cache.md", "snippet": "缓存命中率"}], "negative": false}
+{"id": "negative-absent", "query": "zzzqqq-not-present-marker", "kind": "single_session_quote", "gold": [], "negative": true}

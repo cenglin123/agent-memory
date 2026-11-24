@@ -1,0 +1,22 @@
+diff --git a/agent-memory/src/archive/mod.rs b/agent-memory/src/archive/mod.rs
+--- a/agent-memory/src/archive/mod.rs
++++ b/agent-memory/src/archive/mod.rs
+@@ -2821,7 +2821,7 @@
+             serde_json::to_string_pretty(&ledger).map_err(|e| ArchiveError::Corrupt(e.to_string()))?;
+         let _phase = crate::cost::phase("records_compact");
+         // Canonical first. Only once it is on disk may the journal go away.
+-        atomic_write(&canonical, data.as_bytes())?;
++        // Mutation (l): the write below is moved after the journal removal.
+         // The removal is the one step that can lose an entry, so it takes the
+         // journal lock: an append holds that lock across its repair + write, so
+         // no line can appear between the stamp comparison and the `remove_file`
+@@ -2867,6 +2867,9 @@
+             }
+             Err(error) => return Err(error),
+         }
++        // Mutation (l): the canonical is written only after the journal was
++        // removed, so a failed write loses every entry the journal held.
++        atomic_write(&canonical, data.as_bytes())?;
+         {
+             let mut cache = self
+                 .ledger

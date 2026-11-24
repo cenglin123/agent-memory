@@ -1,0 +1,12 @@
+{"type":"user","message":{"role":"user","content":"共享打印机装驱动报 0x0000011b，怎么解决？"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"0x0000011b 多半是打印后台处理的加密管道策略拦了远程驱动安装。先把共享主机上的 RpcAuthnLevelPrivacyEnabled 策略和客户端对齐，或者改用 Standard TCP/IP 端口直连打印绕开共享点。"}]}}
+{"type":"user","message":{"role":"user","content":"扫描仪扫出来整页全黑，是硬件坏了还是驱动的事？"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"先区分平板扫描和馈纸器：玻璃板有异物、灯管老化是硬件；TWAIN 驱动选错色彩模式也会整页黑，换 WIA 驱动再扫一次基本能把两种情况分开。"}]}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"tool_use","name":"Bash","input":{"command":"pnputil /enum-devices /class Image"}}]}}
+{"type":"user","message":{"role":"user","content":[{"type":"tool_result","content":"Image devices: 1  driver 10.0.19041.1  status OK"}]}}
+{"type":"user","message":{"role":"user","content":"The scanner works over USB but disappears from the network share, any idea?"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"Network scanning usually needs the vendor driver shared through the print server role; if the share only exposes the print queue, TWAIN over SMB fails while USB still works. Install the vendor network scan driver on the client instead of relying on the share."}]}}
+{"type":"user","message":{"role":"user","content":"打印队列卡住，任务删不掉怎么办？"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"停 Print Spooler 服务，清空 C:\\Windows\\System32\\spool\\PRINTERS 下的 SHD 和 SPL 文件再启动服务；顽固任务多半是驱动崩溃留下的假脱机文件。"}]}}
+{"type":"user","message":{"role":"user","content":"装了双面打印单元，驱动里还是没有双面选项？"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"设备选项要在驱动的可安装项里把双面单元标记为已安装，纯驱动默认不探测硬件；有些型号要去打印机属性的设备设置里手动勾选 duplexer。"}]}}

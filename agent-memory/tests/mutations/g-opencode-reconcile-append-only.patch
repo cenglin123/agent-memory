@@ -1,0 +1,12 @@
+diff --git a/agent-memory/src/recall/fulltext/build.rs b/agent-memory/src/recall/fulltext/build.rs
+index 8df1687..17f22ae 100644
+--- a/agent-memory/src/recall/fulltext/build.rs
++++ b/agent-memory/src/recall/fulltext/build.rs
+@@ -1242,7 +1242,6 @@ fn build_opencode(
+             let mut work: BTreeSet<String> = BTreeSet::new();
+             work.extend(removed_sessions.iter().cloned());
+             work.extend(renamed.iter().cloned());
+-            work.extend(slice.iter().cloned());
+             // A tail row of a session the host's session table does not know (a
+             // dangling row) is reconciled here so its stale rows cannot stay.
+             work.extend(

@@ -1,0 +1,57 @@
+{"id":"q001","query":"上次扩展里 host_permissions 和 permissions 是怎么划分的来着","category":"exact","expect":{"file":"s01.jsonl","line":3,"contains":"activeTab"}}
+{"id":"q002","query":"MV3 的 service worker 老被杀，状态最后放哪儿了","category":"exact","expect":{"file":"s01.jsonl","line":7,"contains":"chrome.storage.session"}}
+{"id":"q003","query":"多阶段构建那次怎么保证 so 依赖不漏的","category":"exact","expect":{"file":"s02.jsonl","line":5,"contains":"ldd"}}
+{"id":"q004","query":"打印机装驱动报 0x0000011b 那回最后怎么好的","category":"exact","expect":{"file":"s03.jsonl","line":2,"contains":"RpcAuthnLevelPrivacyEnabled"}}
+{"id":"q005","query":"打印队列卡住删不掉，当时清的哪个目录","category":"exact","expect":{"file":"s03.jsonl","line":10,"contains":"PRINTERS"}}
+{"id":"q006","query":"端口转发配好了外网还是不通，那次是什么原因","category":"exact","expect":{"file":"s05.jsonl","line":5,"contains":"CGNAT"}}
+{"id":"q007","query":"GitHub Pages 全是 404 那次最后改的什么","category":"exact","expect":{"file":"s06.jsonl","line":5,"contains":"gh-pages"}}
+{"id":"q008","query":"那条报表 SQL 从 70 分钟压到 4 分钟是怎么改的","category":"exact","expect":{"file":"s07.jsonl","line":21,"contains":"70 分钟"}}
+{"id":"q009","query":"深分页 LIMIT 慢那个问题后来换成什么写法了","category":"exact","expect":{"file":"s07.jsonl","line":17,"contains":"keyset"}}
+{"id":"q010","query":"输入法候选框挡住快捷键提示那次怎么绕过去的","category":"exact","expect":{"file":"s08.jsonl","line":4,"contains":"候选窗口"}}
+{"id":"q011","query":"扩展只要看当前标签页的内容，需要申请多宽的访问范围来着","category":"synonym","expect":{"file":"s01.jsonl","line":3,"contains":"activeTab"}}
+{"id":"q012","query":"扩展审核说申请的功能范围太大，后来怎么缩的","category":"synonym","expect":{"file":"s01.jsonl","line":5,"contains":"optional_host_permissions"}}
+{"id":"q013","query":"运行产物和编译环境当时是怎么分开的","category":"synonym","expect":{"file":"s02.jsonl","line":3,"contains":"多阶段构建"}}
+{"id":"q014","query":"编译那套东西要不要跟到最终镜像里，结论是什么","category":"synonym","expect":{"file":"s02.jsonl","line":5,"contains":"distroless"}}
+{"id":"q015","query":"扫出来黑页那次怎么判断是机器还是软件的问题","category":"synonym","expect":{"file":"s03.jsonl","line":4,"contains":"WIA"}}
+{"id":"q016","query":"共享扫描在别的电脑上搜不到设备，问题出在哪一层","category":"synonym","expect":{"file":"s03.jsonl","line":8,"contains":"TWAIN"}}
+{"id":"q017","query":"双面打印的选项不见了，当时说去哪儿找","category":"synonym","expect":{"file":"s03.jsonl","line":12,"contains":"duplexer"}}
+{"id":"q018","query":"财报里的表格要转成能算的表，当时的思路是什么","category":"synonym","domain":"work","expect":{"file":"s04.jsonl","line":2,"contains":"勾稽"}}
+{"id":"q019","query":"扫描版那几页做成可检索文本，用的什么流程","category":"synonym","domain":"work","expect":{"file":"s04.jsonl","line":6,"contains":"ocrmypdf"}}
+{"id":"q020","query":"在外面连不上家里的存储设备，第一步先查什么","category":"synonym","expect":{"file":"s05.jsonl","line":5,"contains":"公网 IP"}}
+{"id":"q021","query":"动态地址更新被服务商拒绝，最后怎么弄好的","category":"synonym","expect":{"file":"s05.jsonl","line":11,"contains":"double-NAT"}}
+{"id":"q022","query":"站点绑了独立域名之后资源全找不到，原因是什么","category":"synonym","expect":{"file":"s06.jsonl","line":9,"contains":"CNAME"}}
+{"id":"q023","query":"优化器不认新加的索引那次最后查出什么坑","category":"synonym","expect":{"file":"s07.jsonl","line":25,"contains":"隐式转换"}}
+{"id":"q024","query":"全局快捷键被别的软件截走，怎么抓到是哪个","category":"synonym","expect":{"file":"s08.jsonl","line":8,"contains":"WM_HOTKEY"}}
+{"id":"q025","query":"调试扩展后台的时候 devtools 老断开，当时怎么保持住的","category":"cross_lingual","expect":{"file":"s01.jsonl","line":15,"contains":"serviceworker-internals"}}
+{"id":"q026","query":"apt 残留和文档那类垃圾当时是怎么清的","category":"cross_lingual","expect":{"file":"s02.jsonl","line":11,"contains":"no-install-recommends"}}
+{"id":"q027","query":"Why do more layers not necessarily mean a bigger image?","category":"cross_lingual","expect":{"file":"s02.jsonl","line":13,"contains":"命中缓存"}}
+{"id":"q028","query":"网络共享那台扫描仪在客户端找不到，当时怎么处理的","category":"cross_lingual","expect":{"file":"s03.jsonl","line":8,"contains":"print server role"}}
+{"id":"q029","query":"扫描版年报那几页的 OCR 是怎么做的","category":"cross_lingual","domain":"work","expect":{"file":"s04.jsonl","line":6,"contains":"deskew"}}
+{"id":"q030","query":"动态域名更新被服务商拒，最后原因是什么","category":"cross_lingual","expect":{"file":"s05.jsonl","line":11,"contains":"user-agent"}}
+{"id":"q031","query":"Why is port forwarding not needed after moving to IPv6?","category":"cross_lingual","expect":{"file":"s05.jsonl","line":13,"contains":"AAAA"}}
+{"id":"q032","query":"Why does the port mapping drift after the device reboots?","category":"cross_lingual","expect":{"file":"s05.jsonl","line":3,"contains":"静态绑定"}}
+{"id":"q033","query":"离线打开站点的时候全文搜索怎么保住的","category":"cross_lingual","expect":{"file":"s06.jsonl","line":7,"contains":"service worker"}}
+{"id":"q034","query":"Can we put a login gate in front of the static site?","category":"cross_lingual","expect":{"file":"s06.jsonl","line":11,"contains":"Cloudflare Access"}}
+{"id":"q035","query":"Why does the hotkey work in Notepad but not inside the IDE?","category":"cross_lingual","expect":{"file":"s08.jsonl","line":6,"contains":"全局加速键"}}
+{"id":"q036","query":"How do we keep the currency units from mixing into the numbers?","category":"cross_lingual","domain":"work","expect":{"file":"s04.jsonl","line":4,"contains":"换算列"}}
+{"id":"q037","query":"凌晨跑的月销售额统计后来怎么提速的","category":"long_session","expect":{"file":"s07.jsonl","line":21,"contains":"汇总表"}}
+{"id":"q038","query":"深分页为什么慢，后来怎么改的","category":"long_session","expect":{"file":"s07.jsonl","line":17,"contains":"延迟关联"}}
+{"id":"q039","query":"除了通配符还有哪些让索引失效的写法","category":"long_session","expect":{"file":"s07.jsonl","line":29,"contains":"常量侧"}}
+{"id":"q040","query":"汇总表和明细对不上时有什么兜底","category":"long_session","expect":{"file":"s07.jsonl","line":23,"contains":"告警"}}
+{"id":"q041","query":"大表加索引不锁表当时用的什么办法","category":"long_session","expect":{"file":"s07.jsonl","line":15,"contains":"gh-ost"}}
+{"id":"q042","query":"高峰连接数被打满和慢查询有什么关系","category":"long_session","expect":{"file":"s07.jsonl","line":31,"contains":"连接池"}}
+{"id":"q043","query":"主从延迟当时怎么监控的","category":"long_session","expect":{"file":"s07.jsonl","line":33,"contains":"Seconds_Behind_Master"}}
+{"id":"q044","query":"chrome.storage.session 存轮询状态那个做法","category":"model_missing","expect":{"file":"s01.jsonl","line":7,"contains":"chrome.storage.session"}}
+{"id":"q045","query":"dpkg --path-exclude 剔文档那条命令","category":"model_missing","expect":{"file":"s02.jsonl","line":11,"contains":"path-exclude"}}
+{"id":"q046","query":"Print Spooler 清假脱机文件的步骤","category":"model_missing","expect":{"file":"s03.jsonl","line":10,"contains":"SPL"}}
+{"id":"q047","query":"pt-online-schema-change 影子表改表的做法","category":"model_missing","expect":{"file":"s07.jsonl","line":15,"contains":"pt-online-schema-change"}}
+{"id":"q048","query":"区块链钱包助记词怎么离线备份","category":"permission_negative","expect":{"empty":true,"source_id":"archive-work","source_status":"unavailable","code":"DOMAIN_UNREACHABLE"}}
+{"id":"q049","query":"婚礼请柬用什么软件排版比较好看","category":"permission_negative","expect":{"empty":true,"source_id":"archive-work","source_status":"unavailable","code":"DOMAIN_UNREACHABLE"}}
+{"id":"q050","query":"烤箱做戚风蛋糕的温度和时间怎么定","category":"permission_negative","expect":{"empty":true,"source_id":"archive-work","source_status":"unavailable","code":"DOMAIN_UNREACHABLE"}}
+{"id":"q051","query":"邮件转发规则怎么自动归档到文件夹","category":"permission_negative","expect":{"empty":true,"source_id":"archive-work","source_status":"unavailable","code":"DOMAIN_UNREACHABLE"}}
+{"id":"q052","query":"纸质书正文的索引页怎么排版才规范","category":"permission_negative","expect":{"empty":true,"source_id":"archive-work","source_status":"unavailable","code":"DOMAIN_UNREACHABLE"}}
+{"id":"q053","query":"USB 端口接触不良怎么修比较靠谱","category":"permission_negative","expect":{"empty":true,"source_id":"archive-work","source_status":"unavailable","code":"DOMAIN_UNREACHABLE"}}
+{"id":"q054","query":"公司年报 PDF 的表格抽取当时是怎么做的","category":"permission_negative","expect":{"no_hits_from_source":"archive-work","source_id":"archive-work","source_status":"unavailable","code":"DOMAIN_UNREACHABLE"}}
+{"id":"q055","query":"财报 OCR 之后的勾稽校验流程是什么","category":"permission_negative","expect":{"no_hits_from_source":"archive-work","source_id":"archive-work","source_status":"unavailable","code":"DOMAIN_UNREACHABLE"}}
+{"id":"q056","query":"合并资产负债表抽取用的是哪个库","category":"permission_negative","expect":{"no_hits_from_source":"archive-work","source_id":"archive-work","source_status":"unavailable","code":"DOMAIN_UNREACHABLE"}}
+{"id":"q057","query":"年报科目映射表后面怎么维护","category":"permission_negative","expect":{"no_hits_from_source":"archive-work","source_id":"archive-work","source_status":"unavailable","code":"DOMAIN_UNREACHABLE"}}

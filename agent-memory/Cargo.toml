@@ -1,0 +1,35 @@
+[package]
+name = "agent-memory"
+version = "0.1.0"
+description = "Headless agent session evidence archive (P0/P1 slice), adapted from cc-switch v4.0.20 session_manager"
+license = "MIT"
+edition = "2021"
+rust-version = "1.85.0"
+
+[lib]
+name = "agent_memory"
+path = "src/lib.rs"
+# Doctests are enabled on purpose: the crate-level `compile_fail` blocks are
+# reverse tests pinning that no default real-session-root entry compiles.
+doctest = true
+
+[[bin]]
+name = "agent-memory"
+path = "src/bin/agent-memory.rs"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0", features = ["preserve_order"] }
+log = "0.4"
+chrono = { version = "0.4", features = ["serde"] }
+toml_edit = "0.22"
+regex = "1.10"
+zstd = "0.13"
+rusqlite = { version = "0.31", features = ["bundled"] }
+sha2 = "0.10"
+unicode-normalization = "0.1"
+
+[dev-dependencies]
+tempfile = "3"
+zstd = "0.13"
+rusqlite = { version = "0.31", features = ["bundled"] }

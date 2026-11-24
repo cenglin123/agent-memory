@@ -1,0 +1,8 @@
+{"type":"user","message":{"role":"user","content":"IDE 的 Ctrl+Shift+P 和输入法切换键冲突，怎么改掉？"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"两个方向：在 IDE 的 keymap 里把命令面板挪到别的组合键，或者在输入法设置里把切换键改成 Ctrl+Space 之外的组合；Windows 上还要看时间和语言的高级键盘设置有没有热键被占用。"}]}}
+{"type":"user","message":{"role":"user","content":"输入法候选框总是挡住快捷键提示，有没有办法关掉？"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"候选框跟随光标是输入法行为，改成候选窗口固定在角落；或者在 IDE 外观里把提示框挪到编辑器下方，避开右下角那块。"}]}}
+{"type":"user","message":{"role":"user","content":"The custom hotkey works in Notepad but silently does nothing inside the IDE, why?"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"IDE 的全局加速键会在编辑器收到按键前把它吞掉，或者输入法正在组词时把组合键吃掉；先在 keymap 里查冲突，再切到英文模式试一次就能分辨。"}]}}
+{"type":"user","message":{"role":"user","content":"怎么查是哪个程序抢了系统级快捷键？"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"用 Hotkey Detective 或者 Windows 的 WM_HOTKEY 监听工具逐个看注册项；先退出常驻的截图、剪贴板、窗口管理类工具再试，这类软件最容易注册全局热键。"}]}}

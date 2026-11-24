@@ -1,0 +1,14 @@
+{"type":"user","message":{"role":"user","content":"本地起 Ollama 跑 7B 模型，上下文开到 8K 就显存溢出，参数怎么配？"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"8K 上下文对 8G 卡太紧了。把 num_ctx 降到 4K，或者换 q4_K_M 量化版本；也可以调 num_gpu 少放几层进 GPU，剩下的走 CPU。"}]}}
+{"type":"user","message":{"role":"user","content":"q4 量化之后回答质量掉得明显吗？"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"日常问答基本无感，长文抽取和代码任务会掉几个点。在意的话关键路径用 q8_0，闲聊路由走 q4。"}]}}
+{"type":"user","message":{"role":"user","content":"embedding 模型拉不下来，检索那边是不是就废了？"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"tool_use","name":"Bash","input":{"command":"ollama pull qwen3-embedding:4b"}}]}}
+{"type":"user","message":{"role":"user","content":[{"type":"tool_result","tool_use_id":"tu1","content":"pull failed: connection reset"}]}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"不会废。先把向量检索降级成词面检索顶着，模型镜像修好后补建索引，查询接口不用改。"}]}}
+{"type":"user","message":{"role":"user","content":"内网那台机器拉不到镜像，模型最后是怎么装上去的？"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"在有外网的机器上 ollama pull 之后把模型 blob 导出成 gguf 文件拷进去，用 model_path 指向本地文件加载，不需要联网。"}]}}
+{"type":"user","message":{"role":"user","content":"vLLM 和 Ollama 并发吞吐差多少？"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"同卡同模型下 vLLM 的连续批处理能把并发吞吐翻几倍，但显存占用更高；单人用 Ollama 就够，多人共享再换 vLLM。"}]}}
+{"type":"user","message":{"role":"user","content":"那 API 网关要做限流吗？"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"要。按 token 预算限流，单用户并发压到 2，超出就排队，免得长上下文请求把显存挤爆。"}]}}

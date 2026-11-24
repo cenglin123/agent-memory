@@ -1,0 +1,15 @@
+diff --git a/agent-memory/src/recall/fulltext/build.rs b/agent-memory/src/recall/fulltext/build.rs
+index 8df1687..3cd5517 100644
+--- a/agent-memory/src/recall/fulltext/build.rs
++++ b/agent-memory/src/recall/fulltext/build.rs
+@@ -1264,9 +1264,7 @@ fn build_opencode(
+                     cost::counter("index.session_reprojection_rows", buffered.len() as u64);
+                 }
+                 project_opencode_buffer(source, &sessions, &rel_path, buffered, &mut writer)?;
+-                stale_removed += writer
+-                    .remove_stale_session_rows(session_id, &host_ids)
+-                    .map_err(|error| BuildError::Failed(error.to_string()))?;
++                let _ = &host_ids;
+             }
+             // Sessions only the tail touched are not re-read in full: their tail
+             // rows are already in memory, and only the host's id set is needed to

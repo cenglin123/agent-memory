@@ -1,0 +1,56 @@
+{
+  "schema": "agent-memory/hybrid-eval-set@1",
+  "name": "heldout3-mixed-office-2026-10",
+  "description": "独立 held-out 集：合成工程/办公会话，主题与开发集无关；含 work 域权限反例",
+  "domain": "default",
+  "embedding": {
+    "model_id": "qwen3-embedding:4b",
+    "dimension": 512,
+    "normalization": "l2",
+    "backend": "ollama"
+  },
+  "python": null,
+  "corpora": [
+    {
+      "file": "corpus/s01.jsonl",
+      "provider": "codex",
+      "domain": "default"
+    },
+    {
+      "file": "corpus/s02.jsonl",
+      "provider": "codex",
+      "domain": "default"
+    },
+    {
+      "file": "corpus/s03.jsonl",
+      "provider": "claude",
+      "domain": "default"
+    },
+    {
+      "file": "corpus/s04.jsonl",
+      "provider": "claude",
+      "domain": "work"
+    },
+    {
+      "file": "corpus/s05.jsonl",
+      "provider": "codex",
+      "domain": "default"
+    },
+    {
+      "file": "corpus/s06.jsonl",
+      "provider": "codex",
+      "domain": "default"
+    },
+    {
+      "file": "corpus/s07.jsonl",
+      "provider": "codex",
+      "domain": "default"
+    },
+    {
+      "file": "corpus/s08.jsonl",
+      "provider": "claude",
+      "domain": "default"
+    }
+  ],
+  "queries": "queries.jsonl"
+}

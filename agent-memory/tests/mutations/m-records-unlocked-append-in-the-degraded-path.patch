@@ -1,0 +1,19 @@
+diff --git a/agent-memory/src/archive/mod.rs b/agent-memory/src/archive/mod.rs
+--- a/agent-memory/src/archive/mod.rs
++++ b/agent-memory/src/archive/mod.rs
+@@ -2631,9 +2631,13 @@
+                 // (see `promote_staged_records`). A promotion is a full canonical
+                 // rewrite, so no compaction is run afterwards: the canonical is
+                 // already the merged ledger.
+-                return match self.promote_staged_records(&mut cache, &staged) {
++                // Mutation (m): the degraded flush writes the journal without
++                // its lock again, so its line can land between a compaction's
++                // "still the journal I merged" check and its `remove_file` and
++                // be deleted before anything merged it.
++                return match records::append_tail(&tail_path, &data) {
+                     Ok(()) => {
+-                        crate::cost::counter("records_tail.promoted", 1);
++                        crate::cost::counter("records_tail.append_unlocked", 1);
+                         drop(cache);
+                         Ok(())
+                     }

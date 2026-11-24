@@ -1,0 +1,18 @@
+--- a/agent-memory/src/archive/mod.rs
++++ b/agent-memory/src/archive/mod.rs
+@@ -1723,11 +1723,15 @@
+         let files = self.manifest_files()?;
+         note_list();
+         crate::cost::counter("manifest_snapshot.lists", 1);
+         let mut guard = self
+             .snapshot
+             .lock()
+             .unwrap_or_else(|poisoned| poisoned.into_inner());
++        // Mutation: the snapshot is dropped before every call, so each object
++        // read (or carrier rebuild) re-parses the whole manifest set - the
++        // per-read amplification this batch removed.
++        guard.take();
+         if let Some(snapshot) = guard.as_ref() {
+             if snapshot.matches(&files) {
+                 return Ok(Arc::clone(snapshot));
+             }

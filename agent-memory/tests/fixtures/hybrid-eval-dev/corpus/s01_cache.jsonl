@@ -1,0 +1,9 @@
+{"timestamp": "2026-10-20T09:00:00Z", "type": "session_meta", "payload": {"id": "s-cache", "cwd": "C:/synthetic/project"}}
+{"timestamp": "2026-10-20T09:01:00Z", "type": "response_item", "payload": {"type": "message", "role": "user", "content": "缓存命中率一直上不去，怎么排查？"}}
+{"timestamp": "2026-10-20T09:02:00Z", "type": "response_item", "payload": {"type": "message", "role": "assistant", "content": "先看缓存键的粒度与失效策略：按整表缓存时，任何写操作都会让整块失效。建议改成按记录键缓存，并给热点数据设置更长的过期时间。"}}
+{"timestamp": "2026-10-20T09:03:00Z", "type": "response_item", "payload": {"type": "message", "role": "user", "content": "我们用的是整表缓存，每次更新都清空。"}}
+{"timestamp": "2026-10-20T09:04:00Z", "type": "response_item", "payload": {"type": "message", "role": "assistant", "content": "那就把缓存粒度降到单条记录，用版本号做失效标记，再配合本地一级缓存与 Redis 二级缓存。"}}
+{"timestamp": "2026-10-20T09:05:00Z", "type": "response_item", "payload": {"type": "message", "role": "user", "content": "预热怎么做？"}}
+{"timestamp": "2026-10-20T09:06:00Z", "type": "response_item", "payload": {"type": "message", "role": "assistant", "content": "发布后异步遍历热点键写入缓存，并在低峰期定时刷新，避免请求穿透。"}}
+{"timestamp": "2026-10-20T09:07:01Z", "type": "response_item", "payload": {"type": "function_call", "id": "fc-c-cache", "call_id": "c-cache", "name": "shell", "arguments": "{\"command\":\"rg cache_hit_ratio src/\"}"}}
+{"timestamp": "2026-10-20T09:08:02Z", "type": "response_item", "payload": {"type": "function_call_output", "call_id": "c-cache", "output": "src/cache.rs:18: hit_ratio = hits / (hits + misses)"}}

@@ -1,0 +1,40 @@
+--- a/agent-memory/src/recall/fulltext/build.rs
++++ b/agent-memory/src/recall/fulltext/build.rs
+@@ -1894,31 +1894,12 @@
+         return CarrierPlan::Rescan("file_identity_changed");
+     }
+     if size == entry.size {
+-        if mtime_ns == entry.mtime_ns {
+-            return CarrierPlan::Unchanged {
+-                fill: entry_needs_fill(
+-                    &entry.head_probe,
+-                    &entry.anchor_probe,
+-                    &entry.file_identity,
+-                    identity,
+-                ),
+-            };
+-        }
+-        // Same size, new timestamp: only the probes separate "touched" from
+-        // "rewritten in place".
+-        return match compare_probes(path, &entry.head_probe, &entry.anchor_probe, entry.offset) {
+-            // A round that stopped at a half-written final line left
+-            // `offset < size`. Those bytes are outside every probe window, so a
+-            // later round that finds them completed has to read them back: from
+-            // the committed offset, i.e. the tail only.
+-            Probes::Match if entry.offset < size => CarrierPlan::CompleteTail {
+-                offset: entry.offset,
+-                lines: entry.lines,
+-            },
+-            Probes::Match => CarrierPlan::MtimeOnly,
+-            Probes::Mismatch => CarrierPlan::Rescan("probe_mismatch"),
+-            Probes::Absent => CarrierPlan::Rescan("same_size_mtime_changed"),
+-        };
++        // Mutation (implementation-004a): any same-size file is judged unchanged,
++        // even when its mtime moved, a probe window was rewritten in place, or a
++        // half-written tail was completed. The historical blind spot, widened
++        // back to every equal-length write.
++        let _ = compare_probes(path, &entry.head_probe, &entry.anchor_probe, entry.offset);
++        return CarrierPlan::Unchanged { fill: false };
+     }
+     // The file grew. A backwards timestamp still means "appended bytes are not
+     // proven" (restored copy, clock skew, prefix rewrite): that branch is kept.

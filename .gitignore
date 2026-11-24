@@ -1,0 +1,15 @@
+# 构建产物
+agent-memory/target/
+assets/dist/agent-memory/*.exe
+assets/dist/agent-memory/*.zip
+*.pdb
+
+# 运行时/缓存
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+
+# 临时文件
+*.partial
+*.log

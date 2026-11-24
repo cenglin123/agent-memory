@@ -1,0 +1,3 @@
+{"timestamp": "2026-10-20T09:00:00Z", "type": "session_meta", "payload": {"id": "s-work", "cwd": "C:/synthetic/project"}}
+{"timestamp": "2026-10-20T09:01:00Z", "type": "response_item", "payload": {"type": "message", "role": "user", "content": "薪资调整方案还在审批，先不要同步到公共频道。"}}
+{"timestamp": "2026-10-20T09:02:00Z", "type": "response_item", "payload": {"type": "message", "role": "assistant", "content": "收到，离职交接清单也已整理好，等审批通过后再发送。"}}

@@ -1,0 +1,8 @@
+{"type":"user","message":{"role":"user","content":"公司年报 PDF 里的合并资产负债表怎么抽成能算的表格？"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"先判断 PDF 是文本型还是扫描型：文本型用 pdfplumber 的 extract_tables 配合 lattice 线框识别，扫描型先 OCR。抽完要对合计行做勾稽校验，资产总计必须等于负债和权益总计。"}]}}
+{"type":"user","message":{"role":"user","content":"抽出来的数字和单元格错位，货币单位还混在一起怎么办？"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"错位多半是表格线没识别出来，改用 stream 策略加 explicit horizontal gaps；单位问题放后处理统一：把表头里的 千元/万元/元 抽出来做换算列，别直接混进数值。"}]}}
+{"type":"user","message":{"role":"user","content":"Some pages are scanned images, how do we OCR the financial tables without breaking the layout?"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"Run OCR per page with layout preservation, for example ocrmypdf with deskew enabled, then feed the searchable PDF back into the table extractor; hand-fix only the notes pages where multi-line headers confuse the grid."}]}}
+{"type":"user","message":{"role":"user","content":"年报里的科目名称和我们自己的科目表对不上，映射规则怎么维护？"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"做一张映射表：年报标准科目、我方科目编码、归一化别名三列，别用硬编码字符串匹配；每年准则调整时只改映射表并跑回归对比，抽样核对近三年的合计数。"}]}}

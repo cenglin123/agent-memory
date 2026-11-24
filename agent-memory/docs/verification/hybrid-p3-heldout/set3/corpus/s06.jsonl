@@ -1,0 +1,11 @@
+{"type":"session_meta","payload":{"id":"s-docs-site","cwd":"C:/synthetic/notes-site"}}
+{"type":"response_item","payload":{"type":"message","role":"user","content":"一堆 Markdown 笔记想做成能检索的静态站点，选哪个工具？"}}
+{"type":"response_item","payload":{"type":"message","role":"assistant","content":"要中文全文检索选 VitePress 或者 MkDocs 加 search 插件，纯博客用 Hugo；都是一条构建命令产出静态目录，托管到任意静态服务器都行。"}}
+{"type":"response_item","payload":{"type":"message","role":"user","content":"部署到 GitHub Pages 之后全是 404，怎么查？"}}
+{"type":"response_item","payload":{"type":"message","role":"assistant","content":"先看仓库名和 base 路径对不对：项目页要设 base 为 /仓库名/，构建产物推的是不是 gh-pages 分支，还有 workflows 的 pages 权限要写 id-token: write。"}}
+{"type":"response_item","payload":{"type":"message","role":"user","content":"How do I keep the full-text search working when the site is opened offline?"}}
+{"type":"response_item","payload":{"type":"message","role":"assistant","content":"Build the search index at compile time and ship it as a static JSON asset; avoid a hosted search service, and register a service worker that caches the index together with the pages."}}
+{"type":"response_item","payload":{"type":"message","role":"user","content":"自定义域名接上以后样式全丢了，CSS 404 是什么原因？"}}
+{"type":"response_item","payload":{"type":"message","role":"assistant","content":"还是 base 的问题：绑了自定义域名后 base 要改回 /，并且把 CNAME 文件放进 public，不然资源路径都挂在子路径下找不到。"}}
+{"type":"response_item","payload":{"type":"message","role":"user","content":"Can we put a login gate in front of the static site for private pages?"}}
+{"type":"response_item","payload":{"type":"message","role":"assistant","content":"纯静态托管没有服务端会话，能做的是构建期排除私有页、放到另一个需要鉴权的仓库构建；真要访问控制就挂在 Cloudflare Access 这类反向代理后面。"}}

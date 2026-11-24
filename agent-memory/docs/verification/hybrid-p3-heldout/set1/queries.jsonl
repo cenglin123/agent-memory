@@ -1,0 +1,49 @@
+{"id":"q01","query":"恢复时 collation 版本不匹配是怎么回事","category":"exact","expect":{"file":"s01.jsonl","line":4,"contains":"collation"}}
+{"id":"q02","query":"WAL 归档怎么用 pg_archivecleanup 清理","category":"exact","expect":{"file":"s01.jsonl","line":9,"contains":"pg_archivecleanup"}}
+{"id":"q03","query":"moment 语言包用 IgnorePlugin 怎么裁","category":"exact","expect":{"file":"s02.jsonl","line":4,"contains":"IgnorePlugin"}}
+{"id":"q04","query":"Automatic publicPath is not supported 报错怎么解","category":"exact","expect":{"file":"s02.jsonl","line":7,"contains":"Automatic publicPath"}}
+{"id":"q05","query":"logrotate 里 copytruncate 和 USR1 怎么选","category":"exact","expect":{"file":"s03.jsonl","line":5,"contains":"copytruncate"}}
+{"id":"q06","query":"journalctl --vacuum-time 怎么收缩 journald","category":"exact","expect":{"file":"s03.jsonl","line":9,"contains":"vacuum"}}
+{"id":"q07","query":"num_ctx 降到 4K 换 q4_K_M 怎么配","category":"exact","expect":{"file":"s04.jsonl","line":2,"contains":"num_ctx"}}
+{"id":"q08","query":"longtable 跨页表头怎么设置","category":"exact","expect":{"file":"s05.jsonl","line":13,"contains":"longtable"}}
+{"id":"q09","query":"flock 文件锁防止任务重叠","category":"exact","expect":{"file":"s06.jsonl","line":11,"contains":"flock"}}
+{"id":"q10","query":"每周那些数据快照到底可不可信，怎么验证真能救场","category":"synonym","expect":{"file":"s01.jsonl","line":3,"contains":"恢复演练"}}
+{"id":"q11","query":"把数据倒回另一台机器时报排序规则对不上，是漏带了什么","category":"synonym","expect":{"file":"s01.jsonl","line":5,"contains":"collation"}}
+{"id":"q12","query":"旧的事务日志越攒越多把盘占满了，怎么安全腾地方","category":"synonym","expect":{"file":"s01.jsonl","line":9,"contains":"pg_archivecleanup"}}
+{"id":"q13","query":"日期组件自带的各国文案把包撑大了，只想留两种语言怎么弄","category":"synonym","expect":{"file":"s02.jsonl","line":4,"contains":"IgnorePlugin"}}
+{"id":"q14","query":"构建产物猜不到自己的部署地址，线上就报错，怎么钉死","category":"synonym","expect":{"file":"s02.jsonl","line":8,"contains":"output.publicPath"}}
+{"id":"q15","query":"拆包拆过头了，进门第一屏反而多等了一次请求","category":"synonym","expect":{"file":"s02.jsonl","line":10,"contains":"主包"}}
+{"id":"q16","query":"写日志的进程还抱着旧文件句柄，搬家时怎么一个字不丢","category":"synonym","expect":{"file":"s03.jsonl","line":5,"contains":"USR1"}}
+{"id":"q17","query":"系统自带那个日志服务自己攒了几十 G，直接删文件行不行","category":"synonym","expect":{"file":"s03.jsonl","line":9,"contains":"journalctl"}}
+{"id":"q18","query":"小显存的机器想吃下更长的对话窗口，参数上怎么腾挪","category":"synonym","expect":{"file":"s04.jsonl","line":2,"contains":"num_ctx"}}
+{"id":"q19","query":"几个人共用一台推理机，怎么防止一个人把资源吃光","category":"synonym","expect":{"file":"s04.jsonl","line":14,"contains":"token 预算"}}
+{"id":"q20","query":"排版定稿前章节标题的字号间距怎么跟范本对齐","category":"synonym","expect":{"file":"s05.jsonl","line":11,"contains":"titlesec"}}
+{"id":"q21","query":"CI 上那个 publicPath 的英文报错最后怎么压下去的","category":"cross_lingual","expect":{"file":"s02.jsonl","line":8,"contains":"CDN prefix"}}
+{"id":"q22","query":"PDF 里的中文字体嵌没嵌进去，用什么命令验","category":"cross_lingual","expect":{"file":"s05.jsonl","line":19,"contains":"pdffonts"}}
+{"id":"q23","query":"那个跨页的大表怎么保证每页都有表头、行不被切断","category":"cross_lingual","expect":{"file":"s05.jsonl","line":13,"contains":"endhead"}}
+{"id":"q24","query":"How do I stop the restore from breaking when the sort rule version differs?","category":"cross_lingual","expect":{"file":"s01.jsonl","line":5,"contains":"collation"}}
+{"id":"q25","query":"Why did the log shipper regex break after we added request timing to the access log?","category":"cross_lingual","expect":{"file":"s03.jsonl","line":11,"contains":"request_time"}}
+{"id":"q26","query":"What did we do when the embedding model download failed?","category":"cross_lingual","expect":{"file":"s04.jsonl","line":8,"contains":"词面检索"}}
+{"id":"q27","query":"插图一放大就糊，截图和示意图分别怎么弄","category":"cross_lingual","expect":{"file":"s05.jsonl","line":27,"contains":"vector PDF"}}
+{"id":"q28","query":"Why does the appendix numbering make the table of contents look off?","category":"cross_lingual","expect":{"file":"s05.jsonl","line":23,"contains":"罗马数字"}}
+{"id":"q29","query":"How do we keep the PDF and Word editions looking consistent?","category":"cross_lingual","expect":{"file":"s05.jsonl","line":35,"contains":"diff"}}
+{"id":"q30","query":"参考文献的格式标准混着用怎么办","category":"cross_lingual","expect":{"file":"s05.jsonl","line":33,"contains":"biblatex"}}
+{"id":"q31","query":"That batch job that only worked when run manually — what did we check first?","category":"cross_lingual","expect":{"file":"s06.jsonl","line":3,"contains":"/var/log/cron"}}
+{"id":"q32","query":"定稿前目录页码和正文差两页那次是怎么修的来着","category":"long_session","expect":{"file":"s05.jsonl","line":23,"contains":"编译两遍"}}
+{"id":"q33","query":"正文交叉引用全是问号那回是怎么弄好的","category":"long_session","expect":{"file":"s05.jsonl","line":31,"contains":"aux"}}
+{"id":"q34","query":"PDF 和 Word 两个版本最后怎么保证长得一样","category":"long_session","expect":{"file":"s05.jsonl","line":35,"contains":"样式表复刻"}}
+{"id":"q35","query":"Word 版目录页码更新那事是怎么处理的","category":"long_session","expect":{"file":"s05.jsonl","line":37,"contains":"F9"}}
+{"id":"q36","query":"术语库没挂上导致前三章译名乱了，最后怎么补的","category":"long_session","expect":{"file":"s05.jsonl","line":41,"contains":"回填"}}
+{"id":"q37","query":"交付前最后一遍校对都查哪几样来着","category":"long_session","expect":{"file":"s05.jsonl","line":44,"contains":"四件套"}}
+{"id":"q38","query":"打印版和电子版页边距那次是怎么定的","category":"long_session","expect":{"file":"s05.jsonl","line":39,"contains":"bindingoffset"}}
+{"id":"q39","query":"上次 embedding 模型拉不下来，检索是怎么顶过去的","category":"model_missing","expect":{"file":"s04.jsonl","line":8,"contains":"词面检索"}}
+{"id":"q40","query":"离线那台机器上的模型是怎么装进去的，跟 gguf 文件有关","category":"model_missing","expect":{"file":"s04.jsonl","line":10,"contains":"gguf"}}
+{"id":"q41","query":"跑批里做语义打标的那步，模型没下发时是怎么兜底的","category":"model_missing","expect":{"file":"s06.jsonl","line":25,"contains":"词面打标"}}
+{"id":"q42","query":"模型镜像源挂掉那阵子，线上查询接口受影响了吗","category":"model_missing","expect":{"file":"s04.jsonl","line":8,"contains":"查询接口"}}
+{"id":"q43","query":"术语库缺席那会儿译名一致性是怎么保住的","category":"model_missing","expect":{"file":"s05.jsonl","line":41,"contains":"回填"}}
+{"id":"q44","query":"离职面谈的纪要现在谁保管","category":"permission_negative","expect":{"empty":true}}
+{"id":"q45","query":"报销单据的审批流程走到哪一步了","category":"permission_negative","expect":{"empty":true}}
+{"id":"q46","query":"上次审计点名的高危账号，处理记录能查到吗","category":"permission_negative","expect":{"no_hits_from_source":"archive-work","source_id":"archive-work","source_status":"unavailable","code":"DOMAIN_UNREACHABLE"}}
+{"id":"q47","query":"离职员工的账号和密钥清理完了吗","category":"permission_negative","expect":{"no_hits_from_source":"archive-work","source_id":"archive-work","source_status":"unavailable","code":"DOMAIN_UNREACHABLE"}}
+{"id":"q48","query":"薪资数据的访问日志抽查有什么结论","category":"permission_negative","expect":{"empty":true,"no_hits_from_source":"archive-work","source_id":"archive-work","source_status":"unavailable","code":"DOMAIN_UNREACHABLE"}}
+{"id":"q49","query":"团建经费的分摊方案定了吗","category":"permission_negative","expect":{"empty":true}}

@@ -1,0 +1,9 @@
+{
+  "schema": "agent-memory/eval-sample@1",
+  "description": "Synthetic question set for `eval-recall` (stage 7 §C). Not a real question set: it ships with a synthetic Codex rollout home and a synthetic knowledge base (ask.py stub). Source ids are fixed so the sample is directly runnable.",
+  "queries": "queries.sample.jsonl",
+  "sources": [
+    {"source_id": "sessions", "kind": "codex", "root": "codex"},
+    {"source_id": "kb", "kind": "kb", "root": "kb"}
+  ]
+}

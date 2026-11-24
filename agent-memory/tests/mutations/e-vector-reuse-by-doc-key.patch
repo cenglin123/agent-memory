@@ -1,0 +1,23 @@
+--- a/agent-memory/src/recall/fulltext/vectors.rs
++++ b/agent-memory/src/recall/fulltext/vectors.rs
+@@ -795,15 +795,14 @@
+     let mut sessions_reused = 0u64;
+     let mut sessions_recomputed = 0u64;
+     for group in &mut groups {
+-        let identical = previous
+-            .sessions
+-            .get(&group.session_id)
+-            .map(|stored| stored == &group.fingerprint)
+-            .unwrap_or(false);
++        // Mutation (implementation-004a): rows are reused by `doc_key` alone, so
++        // a session whose text, title or surrounding user turn changed keeps its
++        // stale vectors until the whole source is rebuilt.
++        let _ = &group.fingerprint;
+         let rows_present = units[group.start..group.end]
+             .iter()
+             .all(|unit| previous.rows.contains_key(&unit.doc_key));
+-        group.reusable = identical && rows_present;
++        group.reusable = rows_present;
+         if group.reusable {
+             sessions_reused += 1;
+         } else {

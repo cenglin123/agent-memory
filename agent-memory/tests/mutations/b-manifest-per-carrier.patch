@@ -1,0 +1,42 @@
+--- a/agent-memory/src/recall/fulltext/fallback.rs
++++ b/agent-memory/src/recall/fulltext/fallback.rs
+@@ -356,14 +356,13 @@
+ 
+     /// The run's manifest snapshot: parsed on first need, reused afterwards.
+     fn manifest_snapshot(&self) -> Result<&EvidenceSnapshot, String> {
+-        let loaded = self.snapshot.get_or_init(|| {
+-            let archive = self
+-                .archive
+-                .as_ref()
+-                .ok_or_else(|| "archive unavailable".to_string())?;
+-            EvidenceSnapshot::load(archive)
+-        });
+-        loaded.as_ref().map_err(|error| error.clone())
++        // Mutation (O(K x M)): no per-run snapshot, every batch() re-reads and
++        // re-parses the whole manifest set.
++        let archive = self
++            .archive
++            .as_ref()
++            .ok_or_else(|| "archive unavailable".to_string())?;
++        Ok(Box::leak(Box::new(EvidenceSnapshot::load(archive)?)))
+     }
+ 
+     /// A reader over this run's snapshot, for carrier rebuilds and mirrors.
+--- a/agent-memory/src/archive/mod.rs
++++ b/agent-memory/src/archive/mod.rs
+@@ -1723,11 +1723,15 @@
+         let files = self.manifest_files()?;
+         note_list();
+         crate::cost::counter("manifest_snapshot.lists", 1);
+         let mut guard = self
+             .snapshot
+             .lock()
+             .unwrap_or_else(|poisoned| poisoned.into_inner());
++        // Mutation: the snapshot is dropped before every call, so each object
++        // read (or carrier rebuild) re-parses the whole manifest set - the
++        // per-read amplification this batch removed.
++        guard.take();
+         if let Some(snapshot) = guard.as_ref() {
+             if snapshot.matches(&files) {
+                 return Ok(Arc::clone(snapshot));
+             }

@@ -1,0 +1,25 @@
+diff --git a/agent-memory/src/recall/fulltext/build.rs b/agent-memory/src/recall/fulltext/build.rs
+--- a/agent-memory/src/recall/fulltext/build.rs
++++ b/agent-memory/src/recall/fulltext/build.rs
+@@ -967,16 +967,12 @@
+ /// Drop every live unit one message still has — the projection a rebuild would
+ /// produce for it is empty.
+ fn drop_units(
+-    writer: &mut Writer<'_>,
+-    session_id: &str,
+-    message_id: &str,
++    _writer: &mut Writer<'_>,
++    _session_id: &str,
++    _message_id: &str,
+ ) -> Result<(), BuildError> {
+-    let removed = writer
+-        .prune_message(session_id, message_id, &[])
+-        .map_err(|error| BuildError::Failed(error.to_string()))?;
+-    if removed > 0 {
+-        cost::counter("index.opencode_unprojectable_units_removed", removed);
+-    }
++    // Mutation (i): restore the pre-rework defect - an unprojectable row is
++    // skipped, never pruned, so its old units stay forever.
+     Ok(())
+ }
+

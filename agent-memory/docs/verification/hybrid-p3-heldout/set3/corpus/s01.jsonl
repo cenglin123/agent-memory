@@ -1,0 +1,15 @@
+{"type":"session_meta","payload":{"id":"s-ext","cwd":"C:/synthetic/ext-dev"}}
+{"type":"response_item","payload":{"type":"message","role":"user","content":"插件要读当前页面的 DOM，manifest 的权限到底该写 permissions 还是 host_permissions？"}}
+{"type":"response_item","payload":{"type":"message","role":"assistant","content":"读网页内容属于 host 范畴，放 host_permissions；permissions 只放 chrome.tabs 这类 API。能用 activeTab 就别申请全站 host 权限，商店审核对 <all_urls> 这种全站声明很敏感。"}}
+{"type":"response_item","payload":{"type":"message","role":"user","content":"商店审核被打回来了，说权限申请过度，怎么改才能过？"}}
+{"type":"response_item","payload":{"type":"message","role":"assistant","content":"把 host_permissions 从全站收窄到具体站点清单，manifest_version 3 里再加 optional_host_permissions 让用户按需授权；申诉说明里逐条写清每个权限的用途。"}}
+{"type":"response_item","payload":{"type":"message","role":"user","content":"MV3 的 service worker 老是被回收，定时轮询的状态丢了怎么办？"}}
+{"type":"response_item","payload":{"type":"message","role":"assistant","content":"别在 service worker 里维持内存状态，把轮询状态放 chrome.storage.session，需要长连接就用 offscreen document 承接，唤醒靠 alarms 事件。"}}
+{"type":"response_item","payload":{"type":"function_call","call_id":"c1","name":"shell","arguments":"{\"command\":\"rg -n chrome.alarms src/background.js\"}"}}
+{"type":"response_item","payload":{"type":"function_call_output","call_id":"c1","output":"src/background.js:42: chrome.alarms.create poll periodInMinutes 1"}}
+{"type":"response_item","payload":{"type":"message","role":"user","content":"optional_permissions 和 permissions 平时怎么取舍？"}}
+{"type":"response_item","payload":{"type":"message","role":"assistant","content":"核心功能必需的放 permissions，低频或敏感的放 optional_permissions，运行时用 chrome.permissions.request 弹窗申请；用户拒绝时降级功能，而不是让整个扩展不可用。"}}
+{"type":"response_item","payload":{"type":"message","role":"user","content":"content script 注入时机用 document_idle 够不够？"}}
+{"type":"response_item","payload":{"type":"message","role":"assistant","content":"document_idle 大多数场景够用；要改首屏样式就用 document_start 并注意 CSP，动态 SPA 页面建议挂 MutationObserver 再补注入。"}}
+{"type":"response_item","payload":{"type":"message","role":"user","content":"How do I inspect the MV3 background worker? Devtools keeps dropping it."}}
+{"type":"response_item","payload":{"type":"message","role":"assistant","content":"Open chrome://extensions and click the service worker link under Inspect views; if it suspends, chrome://serviceworker-internals plus the extensions keep-alive flag stops the worker from being killed while you debug."}}

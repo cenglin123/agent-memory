@@ -1,0 +1,14 @@
+diff --git a/agent-memory/src/archive/mod.rs b/agent-memory/src/archive/mod.rs
+--- a/agent-memory/src/archive/mod.rs
++++ b/agent-memory/src/archive/mod.rs
+@@ -2790,6 +2790,10 @@
+             }
+             Err(error) => return Err(error),
+         });
++        // Mutation (o): the lock is dropped before the run, so two automatic
++        // compactions can interleave and one canonical can overwrite a newer
++        // one that already absorbed and removed a journal.
++        compact_guard = None;
+         let outcome = self.compact_records_locked();
+         drop(compact_guard.take());
+         match outcome {
