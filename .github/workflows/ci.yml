@@ -1,0 +1,33 @@
+name: ci
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: agent-memory
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show toolchain
+        run: |
+          rustc --version
+          cargo --version
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: agent-memory
+
+      - name: Test
+        run: cargo test --tests --locked
