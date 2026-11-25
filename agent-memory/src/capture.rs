@@ -275,7 +275,20 @@ pub(crate) fn fingerprint(path: &Path) -> Result<SourceFingerprint, AppError> {
 /// normalized away so one physical file keeps one key across
 /// present/absent states.
 pub(crate) fn canonical_key(path: &Path) -> String {
-    let resolved = path.canonicalize().unwrap_or_else(|_| path.to_path_buf());
+    let resolved = match path.canonicalize() {
+        Ok(canonical) => canonical,
+        // A deleted source has no canonical form. Canonicalising its parent
+        // keeps the key spelled the same way as when the file existed (Windows
+        // may report one directory as `RUNNER~1` and as `runneradmin`), so a
+        // removal is still recognised as the same source.
+        Err(_) => match (path.parent(), path.file_name()) {
+            (Some(parent), Some(name)) => parent
+                .canonicalize()
+                .map(|canonical| canonical.join(name))
+                .unwrap_or_else(|_| path.to_path_buf()),
+            _ => path.to_path_buf(),
+        },
+    };
     normalize_key(&resolved)
 }
 

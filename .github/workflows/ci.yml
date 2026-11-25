@@ -30,4 +30,4 @@ jobs:
           workspaces: agent-memory
 
       - name: Test
-        run: cargo test --tests --locked
+        run: cargo test --tests --locked --no-fail-fast
