@@ -1,0 +1,104 @@
+NOTICE
+======
+
+This crate contains code adapted from cc-switch
+(https://github.com/farion1231/cc-switch), licensed under the MIT License.
+The upstream copyright and permission notice is preserved in LICENSE
+(copied verbatim from the upstream release tag).
+
+Upstream baseline
+-----------------
+- tag:    v4.0.20
+- commit: 85ad4969b3399500baaea9d46b1e08f87aba80e1
+- Selection rationale: latest release tag at P0 start; relative to the earlier
+  investigation HEAD (326a9ef8) it already contains Codex compressed-rollout
+  reading (8641cd1d) and the current-default OpenCode SQLite V2 handling, so it
+  covers the current default write formats of all three first-batch providers.
+
+Files carried over (with mechanical path/import adaptation only, unless noted)
+------------------------------------------------------------------------------
+- src/model.rs                    <- src-tauri/src/session_manager/model.rs
+- src/providers/utils.rs          <- src-tauri/src/session_manager/providers/utils.rs
+- src/providers/blocks.rs         <- src-tauri/src/session_manager/providers/blocks.rs
+- src/providers/claude.rs         <- src-tauri/src/session_manager/providers/claude.rs
+- src/providers/codex.rs          <- src-tauri/src/session_manager/providers/codex.rs
+- src/providers/codex_items.rs    <- src-tauri/src/session_manager/providers/codex_items.rs
+- src/providers/opencode.rs       <- src-tauri/src/session_manager/providers/opencode.rs
+- src/providers/opencode_blocks.rs <- src-tauri/src/session_manager/providers/opencode_blocks.rs
+- src/codex_rollout_file.rs       <- src-tauri/src/codex_rollout_file.rs
+- src/codex_state_db.rs           <- src-tauri/src/codex_state_db.rs
+- tests/fixtures/sessions/*.messages.json <- tests/fixtures/sessions/ (shared
+  contract fixtures, unchanged)
+
+Local modifications to carried-over files
+-----------------------------------------
+1. Import paths rewritten from `crate::session_manager::...` /
+   `crate::codex_config` / `crate::opencode_config` to this crate's layout.
+2. Source-deleting functions and their tests removed (delete_session*,
+   remove_path_if_exists, and their dedicated tests). The headless archive
+   never deletes session sources.
+3. The OpenCode mixed V1/V2 test keeps its scan/load assertions; the embedded
+   delete assertions were removed (renamed accordingly).
+4. Provider root resolution goes through src/config.rs, a headless shim with
+   no Tauri/settings/GUI coupling and **no default real-root resolution**.
+   Upstream's `crate::settings` override chain and every home-dir default are
+   NOT ported: scanning APIs take explicitly injected roots/config, and the
+   only ambient switch is `CC_SWITCH_TEST_HOME` (synthetic home for `~`
+   expansion; resolution fails closed to `None` when it is absent).
+   `OPENCODE_DB` / `CODEX_SQLITE_HOME` / `CODEX_HOME` / `XDG_DATA_HOME`
+   redirection is NOT honored; on Windows `dirs::home_dir()` ignores
+   `HOME`/`USERPROFILE` (known-folder API), so a temporary HOME is not an
+   isolation guarantee — the crate never calls `dirs::home_dir()`. The
+   upstream no-argument `scan_sessions` entries and the Codex
+   `CODEX_SQLITE_HOME` env fallback were deleted outright; see
+   P0P1-BOUNDARY-FIXED.md for the reverse tests pinning this.
+5. `atomic_write` is reimplemented as write-temp + fsync + rename (same-volume
+   rename is atomic on Windows/Unix); upstream's ReplaceFileW retry loop is not
+   ported.
+
+Deliberately not ported (desktop coupling / out of P0-P1 scope)
+---------------------------------------------------------------
+- Tauri commands, Channel streaming, terminal launch, reveal-in-Finder,
+  Markdown export, tray/GUI, delete-session commands
+  (src-tauri/src/commands/session_manager.rs, session_manager/terminal/).
+- session_manager/cache.rs TranscriptCache / source_fingerprint (interactive
+  reading concern; the archive keeps its own watermark/fingerprint logic).
+- session_manager/content.rs validate_source / resolve_content_ref / image
+  decoding (source-side interactive read path; archive readback resolves
+  references against archived objects instead).
+- Providers for agy, gemini, grokbuild, hermes, kimi, mcode, omp, openclaw, pi
+  (second-batch frameworks; the dispatch match is reduced to claude/codex/
+  opencode).
+- hermes WSL reader (python sidecar), app_store / settings / database /
+  proxy / MCP and all other cc-switch subsystems.
+
+Direct dependencies of this crate (all crates.io, no Tauri):
+serde, serde_json (preserve_order), log, chrono, toml_edit, regex,
+zstd, rusqlite (bundled+backup), sha2; dev: tempfile, zstd.
+(Upstream's `dirs` is not a dependency here: home-dir resolution is exactly
+the default real-root channel that was removed.)
+
+Recall slice (src/recall/)
+--------------------------
+`src/recall/port/` is an independent implementation written against the frozen
+"最小统一回忆" contract. It **reuses the already-ported archive model and
+providers** listed above (cc-switch v4.0.20 / commit
+85ad4969b3399500baaea9d46b1e08f87aba80e1) instead of vendoring a second copy:
+the plan's port symbols (`SessionMessage`, `SessionBlock`, `PartLocator`,
+`parse_timestamp_to_ms`) already exist in `src/model.rs` and `src/providers/*`,
+and a second copy would create a second model and a second TUI-coupling surface.
+No additional cc-switch source is copied, no cc-switch crate/path/git
+dependency is declared, and the upstream tag/commit above remains the reviewed
+design reference. The ported symbol inventory is therefore the archive list at
+the top of this file; the recall layer adds only the primitives it needs.
+
+New (original) recall files:
+
+- src/recall/config.rs, contract.rs, hash.rs, refs.rs, text.rs, budget.rs,
+  search.rs, read.rs, snapshot.rs, mod.rs
+- src/recall/port/model.rs, project.rs, blocks.rs, probe.rs, sqlite_v1.rs,
+  sqlite_v2.rs, legacy_json.rs, reader.rs, mod.rs
+- src/recall/providers/mod.rs, opencode.rs
+- src/lib.rs: only adds `pub mod recall;`
+- tests/recall_{contract,opencode,read,boundary}.rs, tests/support/mod.rs,
+  tests/fixtures/recall/kb_stub/ask.py (offline P2 stub, not executed here)

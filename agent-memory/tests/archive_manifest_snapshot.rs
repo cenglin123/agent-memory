@@ -103,7 +103,12 @@ fn index_source(config: &Path) -> u64 {
         .expect("claude report");
     let archive = &report.detail.as_ref().expect("detail")["archive"];
     assert_eq!(archive["status"], "ok", "{archive}");
-    archive["added"].as_u64().unwrap_or(0)
+    let added = archive["added"].as_u64().unwrap_or(0);
+    if added == 0 {
+        eprintln!("DBG archive={archive}");
+        eprintln!("DBG report={}", report.detail.as_ref().expect("detail"));
+    }
+    added
 }
 
 #[test]
