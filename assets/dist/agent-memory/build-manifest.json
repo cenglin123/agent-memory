@@ -1,11 +1,11 @@
 {
   "schema": "agent-memory/dist-manifest@1",
   "component": "agent-memory",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "target": "x86_64-pc-windows-msvc",
   "profile": "release",
   "binary": "agent-memory.exe",
-  "binarySha256": "d1e73bbd6b9fba77d1ef73298686a495fb08c42f9df242822932f6330df38601",
+  "binarySha256": "84712fb8f219bb8c6c522a97d6a4f58dceeab8fbe8babf3303051603e1de8ea8",
   "binaryBytes": 15236608,
   "peHeader": "MZ",
   "toolchain": {
@@ -18,16 +18,16 @@
   },
   "build": {
     "script": "agent-memory/build/build-release.ps1",
-    "builtAtUtc": "2026-11-25T17:02:55Z",
+    "builtAtUtc": "2026-11-25T17:05:59Z",
     "rustflags": "-C target-feature=+crt-static -C link-arg=/Brepro",
     "reproducibleDoubleBuild": true
   },
   "source": {
-    "commit": "119f24abb8ddd9057901af06cb62a993ffd79a9a",
-    "baseCommit": "119f24abb8ddd9057901af06cb62a993ffd79a9a",
+    "commit": "f21bb9dd9ac11c9a814f6e18b8749abf28fa84e4",
+    "baseCommit": "f21bb9dd9ac11c9a814f6e18b8749abf28fa84e4",
     "treeDirty": false,
     "treeDirtyFiles": 0,
-    "treeSha256": "fcfa787357e59ce06eb600de325cd41d4542b749b32552e5eace82f6ba404ec1",
+    "treeSha256": "51f57960cf08157d37999e02055f2ca4806554a65246546c541137fd2b96b923",
     "treeFiles": 116,
     "scope": [
       "agent-memory/Cargo.toml",
