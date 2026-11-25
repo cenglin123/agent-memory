@@ -59,7 +59,7 @@ fn original_temp() -> &'static Path {
         // the verbatim prefix removed so config validation accepts it.
         let raw = std::env::temp_dir();
         let canonical = raw.canonicalize().unwrap_or_else(|_| raw.clone());
-        match canonical.to_string_lossy().strip_prefix(r"\?\") {
+        match canonical.to_string_lossy().strip_prefix("\\\\?\\") {
             Some(rest) => PathBuf::from(rest),
             None => canonical,
         }
@@ -88,7 +88,7 @@ impl TestEnv {
             .unwrap_or_else(|_| dir.path().to_path_buf());
         // `canonicalize` returns a verbatim path (\\?\C:\...); the config
         // validator rejects extended-length spellings, so strip the prefix.
-        let base = match base.to_string_lossy().strip_prefix(r"\\?\") {
+        let base = match base.to_string_lossy().strip_prefix("\\\\?\\") {
             Some(rest) => PathBuf::from(rest),
             None => base,
         };
