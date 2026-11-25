@@ -44,6 +44,7 @@ pub const REDIRECTED_ENV: [&str; 15] = [
 
 pub struct TestEnv {
     dir: tempfile::TempDir,
+    base: PathBuf,
     saved: BTreeMap<String, String>,
     _guard: MutexGuard<'static, ()>,
 }
@@ -69,6 +70,19 @@ impl TestEnv {
         original_temp();
         // Create the root before touching TEMP so `tempdir()` still resolves.
         let dir = tempfile::tempdir().expect("temporary root");
+        // 8.3 short names (RUNNER~1) would make fixture path strings differ from
+        // the canonical spelling the capture layer stores; use the long form
+        // everywhere so comparisons describe one directory.
+        let base = dir
+            .path()
+            .canonicalize()
+            .unwrap_or_else(|_| dir.path().to_path_buf());
+        // `canonicalize` returns a verbatim path (\\?\C:\...); the config
+        // validator rejects extended-length spellings, so strip the prefix.
+        let base = match base.to_string_lossy().strip_prefix(r"\\?\") {
+            Some(rest) => PathBuf::from(rest),
+            None => base,
+        };
         let saved: BTreeMap<String, String> = std::env::vars().collect();
         for key in saved.keys() {
             std::env::remove_var(key);
@@ -84,7 +98,7 @@ impl TestEnv {
                 std::env::set_var(key, value);
             }
         }
-        let temp = dir.path().to_string_lossy().to_string();
+        let temp = base.to_string_lossy().to_string();
         let drive = temp.chars().next().map(|ch| ch.to_string()).unwrap_or_default();
         for key in REDIRECTED_ENV {
             let value = match key {
@@ -101,6 +115,7 @@ impl TestEnv {
         }
         TestEnv {
             dir,
+            base,
             saved,
             _guard: guard,
         }
@@ -111,13 +126,13 @@ impl TestEnv {
     }
 
     pub fn root(&self, name: &str) -> PathBuf {
-        let path = self.dir.path().join(name);
+        let path = self.base.join(name);
         std::fs::create_dir_all(&path).expect("source root");
         path
     }
 
     pub fn write(&self, rel: &str, bytes: &[u8]) -> PathBuf {
-        let path = self.dir.path().join(rel);
+        let path = self.base.join(rel);
         if let Some(parent) = path.parent() {
             std::fs::create_dir_all(parent).expect("parent dir");
         }
