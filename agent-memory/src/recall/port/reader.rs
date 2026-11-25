@@ -239,8 +239,21 @@ pub fn read_line_bounded<R: BufRead>(
 }
 
 pub fn rel_from_root(root: &str, child: &Path) -> Option<String> {
+    if let Some(rel) = rel_from_strings(root, &child.to_string_lossy()) {
+        return Some(rel);
+    }
+    // Windows can spell one directory two ways: the 8.3 short name
+    // (RUNNER~1) in a config path, the long name (runneradmin) in a path
+    // canonicalised during capture. Retry on canonical forms so the same
+    // directory still matches.
+    let root_long = crate::path_spelling::canonical_spelling(Path::new(root))?;
+    let child_long = crate::path_spelling::canonical_spelling(child)?;
+    rel_from_strings(&root_long, &child_long)
+}
+
+fn rel_from_strings(root: &str, child: &str) -> Option<String> {
     let root = root.replace('\\', "/");
-    let child = child.to_string_lossy().replace('\\', "/");
+    let child = child.replace('\\', "/");
     let root_trimmed = root.trim_end_matches('/');
     let root_ascii = root_trimmed.to_ascii_lowercase();
     let child_ascii = child.to_ascii_lowercase();
@@ -253,6 +266,7 @@ pub fn rel_from_root(root: &str, child: &Path) -> Option<String> {
         None
     }
 }
+
 
 #[cfg(test)]
 mod tests {
@@ -350,4 +364,5 @@ mod tests {
         );
         assert_eq!(rel_from_root("C:/Root", Path::new("C:/Other/db")), None);
     }
+
 }

@@ -43,6 +43,7 @@
 //! and decoy counterparts.
 
 pub mod archive;
+mod path_spelling;
 pub mod attachment;
 pub mod evidence;
 pub mod audit_scan;

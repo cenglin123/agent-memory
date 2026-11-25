@@ -30,4 +30,10 @@ jobs:
           workspaces: agent-memory
 
       - name: Test
-        run: cargo test --tests --locked
+        # The runner's default TEMP is an 8.3 short path (RUNNER~1) while tools
+        # echo the long form; pin it so the suite tests the code, not the alias
+        # spelling (alias handling has unit coverage in src/path_spelling.rs).
+        env:
+          TEMP: ${{ runner.temp }}
+          TMP: ${{ runner.temp }}
+        run: cargo test --tests --locked --no-fail-fast
