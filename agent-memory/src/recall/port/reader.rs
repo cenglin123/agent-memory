@@ -239,8 +239,21 @@ pub fn read_line_bounded<R: BufRead>(
 }
 
 pub fn rel_from_root(root: &str, child: &Path) -> Option<String> {
+    if let Some(rel) = rel_from_strings(root, &child.to_string_lossy()) {
+        return Some(rel);
+    }
+    // Windows can spell one directory two ways: the 8.3 short name
+    // (RUNNER~1) in a config path, the long name (runneradmin) in a path
+    // canonicalised during capture. Retry on canonical forms so the same
+    // directory still matches.
+    let root_long = canonical_form(Path::new(root))?;
+    let child_long = canonical_form(child)?;
+    rel_from_strings(&root_long, &child_long)
+}
+
+fn rel_from_strings(root: &str, child: &str) -> Option<String> {
     let root = root.replace('\\', "/");
-    let child = child.to_string_lossy().replace('\\', "/");
+    let child = child.replace('\\', "/");
     let root_trimmed = root.trim_end_matches('/');
     let root_ascii = root_trimmed.to_ascii_lowercase();
     let child_ascii = child.to_ascii_lowercase();
@@ -251,6 +264,30 @@ pub fn rel_from_root(root: &str, child: &Path) -> Option<String> {
         Some(child[root_ascii.len() + 1..].to_string())
     } else {
         None
+    }
+}
+
+/// Canonical spelling of `path`, resolving the longest existing ancestor so a
+/// deleted carrier still normalises. Returns forward-slash text with the
+/// Windows `\\?\` verbatim prefix removed.
+fn canonical_form(path: &Path) -> Option<String> {
+    let mut tail: Vec<std::ffi::OsString> = Vec::new();
+    let mut current = path.to_path_buf();
+    loop {
+        if let Ok(canonical) = std::fs::canonicalize(&current) {
+            let mut resolved = canonical;
+            for name in tail.iter().rev() {
+                resolved.push(name);
+            }
+            let text = resolved.to_string_lossy();
+            let text = text.strip_prefix(r"\\?\").unwrap_or(&text);
+            return Some(text.to_string());
+        }
+        let name = current.file_name()?.to_os_string();
+        tail.push(name);
+        if !current.pop() {
+            return None;
+        }
     }
 }
 
@@ -350,4 +387,22 @@ mod tests {
         );
         assert_eq!(rel_from_root("C:/Root", Path::new("C:/Other/db")), None);
     }
+    #[test]
+    fn rel_from_root_falls_back_to_canonical_spellings() {
+        let dir = tempfile::tempdir().expect("temp dir");
+        let project = dir.path().join("proj");
+        std::fs::create_dir_all(&project).expect("project dir");
+        let file = project.join("carrier.jsonl");
+        std::fs::write(&file, b"{}\n").expect("write carrier");
+        std::fs::remove_file(&file).expect("remove carrier");
+
+        // A non-canonical root must still resolve a deleted carrier by
+        // canonicalising the longest existing ancestor.
+        let dotted = format!("{}/./proj/..", dir.path().display());
+        assert_eq!(
+            rel_from_root(&dotted, &file).as_deref(),
+            Some("proj/carrier.jsonl")
+        );
+    }
+
 }
