@@ -54,7 +54,16 @@ pub struct TestEnv {
 /// so a later read never observes another case's redirected value.
 fn original_temp() -> &'static Path {
     static TEMP: OnceLock<PathBuf> = OnceLock::new();
-    TEMP.get_or_init(std::env::temp_dir)
+    TEMP.get_or_init(|| {
+        // One spelling for every fixture root: the canonical long form, with
+        // the verbatim prefix removed so config validation accepts it.
+        let raw = std::env::temp_dir();
+        let canonical = raw.canonicalize().unwrap_or_else(|_| raw.clone());
+        match canonical.to_string_lossy().strip_prefix(r"\?\") {
+            Some(rest) => PathBuf::from(rest),
+            None => canonical,
+        }
+    })
 }
 
 /// A temporary directory that never lands inside another case's redirected
