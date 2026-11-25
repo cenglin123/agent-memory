@@ -1,6 +1,6 @@
 [package]
 name = "agent-memory"
-version = "0.1.0"
+version = "0.1.1"
 description = "Headless agent session evidence archive (P0/P1 slice), adapted from cc-switch v4.0.20 session_manager"
 license = "MIT"
 edition = "2021"
