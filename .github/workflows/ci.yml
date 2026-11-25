@@ -14,6 +14,14 @@ concurrency:
 jobs:
   test:
     runs-on: windows-latest
+    env:
+      # The runner's default TEMP is an 8.3 short path (RUNNER~1); several
+      # report/baseline comparisons compare path strings with tools that echo
+      # the long form. Pin TEMP to the runner's long-form temp root so CI tests
+      # the code, not the alias spelling (alias handling has unit coverage in
+      # src/path_spelling.rs).
+      TEMP: ${{ runner.temp }}
+      TMP: ${{ runner.temp }}
     defaults:
       run:
         working-directory: agent-memory
