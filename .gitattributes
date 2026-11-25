@@ -1,0 +1,6 @@
+# Keep text files LF in the working tree: the Skill entry tests reject CR, and
+# Actions checks out with core.autocrlf=true by default on Windows.
+* text=auto eol=lf
+
+# PowerShell 5.1 is happiest with CRLF and a BOM; leave those to the files.
+*.ps1 text eol=crlf
