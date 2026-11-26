@@ -4,3 +4,9 @@
 
 # PowerShell 5.1 is happiest with CRLF and a BOM; leave those to the files.
 *.ps1 text eol=crlf
+
+# 这套脚本同时是「套装」仓的镜像：套件侧 assets/scripts/*.py 以 CRLF 入库，而
+# 61/62 用原始字节 SHA256 校验已安装的语义辅助脚本（不忽略行尾）。检出时若不是
+# 套件的那份字节，安装出来的副本永远对不上期望值，因此单独把这一份固定为 CRLF；
+# 其余 .py 不参与字节校验，保持 LF，避免将来 renormalize 产生整文件 diff。
+assets/scripts/recall_embedding.py text eol=crlf
